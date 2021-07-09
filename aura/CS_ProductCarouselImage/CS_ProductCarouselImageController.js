@@ -7,9 +7,9 @@
         var id = component.get("v.id");
         helper.getAttachments(component, id);
     },
-    onHover: function(component, event, helper) {
-       var carousel = component.find("carousel");
-       carousel.set("v.disableAutoScroll", "false");
-       console.log(carousel.get("v.disableAutoScroll"));
-    }
+     onAutoScrollChange: function(component, event, helper) {
+         console.log(component.get("v.autoScroll"))
+          var carousel = component.find("carousel");
+          carousel.set("v.disableAutoScroll", "true");
+     }
 })

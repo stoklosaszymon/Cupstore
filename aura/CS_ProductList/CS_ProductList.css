@@ -16,11 +16,16 @@
     border-color: gray;
 }
 
+.THIS .slds-carousel__indicators {
+    display: none
+}
+
+.THIS .productTile:hover .slds-carousel__indicators {
+   display: block;
+}
+
 .THIS .image {
     position: relative;
     width: 100%;
 }
 
-.THIS .slds-carousel__indicators {
-    display: none
-}

@@ -15,10 +15,13 @@
         helper.redirectToProduct(component, productId);
     },
     onHover: function(component, event, helper) {
-        console.log("asdasda")
-        
-        var carousel = component.find("imgCarousel");
-        carousel.set("autoScroll", "false");
-        console.log(carousel.get("autoScroll"));
+        var index = event.currentTarget.dataset.id;
+        var carousel = component.find("imgCarousel")[index];
+        carousel.set("v.autoScroll", true);
+    },
+    onLeave: function(component, event, helper) {
+        var index = event.currentTarget.dataset.id;
+        var carousel = component.find("imgCarousel")[index];
+        carousel.set("v.autoScroll", false);
     }
 })

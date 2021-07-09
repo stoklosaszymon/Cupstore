@@ -19,10 +19,4 @@
         var navService = component.find("navService");
         navService.navigate(pageReference);
     },
-    onHover: function(component, event, helper) {
-        console.log("asdasda")
-        var carousel = component.find("imgCarousel");
-        carousel.set("autoScroll", "false");
-        console.log(carousel.get("autoScroll"));
-    }
 })
