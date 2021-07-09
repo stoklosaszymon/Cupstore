@@ -1,0 +1,18 @@
+/**
+ * Created by BRITENET on 08.07.2021.
+ */
+.THIS {
+}
+
+.THIS.navMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+}

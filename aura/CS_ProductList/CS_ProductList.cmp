@@ -1,0 +1,28 @@
+<aura:component description="CS_ProductList" controller="CS_ProductController"
+                implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler event="c.CS_SearchProduct" action="{!c.handleSearch}"/>
+    <aura:registerEvent type="c.CS_SelectProduct" name="selectProduct"/>
+    <aura:attribute name="products" type="Cup__c[]"/>
+    <lightning:navigation aura:id="navService"/>
+
+    <div class="listContainer">
+        <aura:iteration items="{!v.products}" var="product">
+            <div class="productTile  slds-p-around_x-large" data-id="{!product.Id}" onclick="{!c.handleSelect}">
+                <div onmouseover="{!c.onHover}">
+                    <c:CS_ProductCarouselImage id="{!product.Id}" aura:id="imgCarousel"/>
+                </div>
+                <div style="width: 100%; text-align: center">
+                    <p style="font-weight: bold; font-size: 1.1rem">
+                            {!product.Name}
+                    </p>
+                    <p>
+                        <lightning:formattedNumber value="{!product.Price__c}"
+                                                   style="currency"
+                                                   currencyCode="USD"/>
+                    </p>
+                </div>
+            </div>
+        </aura:iteration>
+    </div>
+</aura:component>

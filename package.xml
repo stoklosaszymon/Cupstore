@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>CS_ProductController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>CS_CupStoreApp</members>
+        <members>CS_NavBar</members>
+        <members>CS_ProductCarouselImage</members>
+        <members>CS_ProductList</members>
+        <members>CS_ProductPage</members>
+        <members>CS_ProductSearch</members>
+        <members>CS_SearchProduct</members>
+        <members>CS_SelectProduct</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <version>48.0</version>
+</Package>

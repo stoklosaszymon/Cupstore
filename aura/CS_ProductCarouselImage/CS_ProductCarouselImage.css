@@ -1,0 +1,10 @@
+.THIS {
+}
+
+.THIS .slds-carousel__content {
+    display: none;
+}
+
+.THIS .slds-carousel__autoplay {
+    display: none;
+}

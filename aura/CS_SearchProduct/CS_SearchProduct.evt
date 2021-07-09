@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="CS_SearchProduct">
+    <aura:attribute type="List" name="productList"/>
+</aura:event>

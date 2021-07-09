@@ -1,0 +1,48 @@
+<aura:component description="CS_ProductPage" controller="CS_ProductController"
+                implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
+    <aura:handler event="c.CS_SelectProduct" action="{!c.handleSelect}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:attribute name="productDetails" type="Cup__c"/>
+    <aura:attribute name="recordId" type="String"/>
+    <div style="display:flex; flex-direction: row" class="slds-m-top_medium">
+        <div class="slds-size_6-of-12">
+            <c:CS_ProductCarouselImage id="{!v.productDetails.Id}"/>
+        </div>
+        <div class="slds-m-left_large" style="width: 100%">
+            <p style="font-size: 1.7rem; font-weight: bold">
+                    {!v.productDetails.Name}
+            </p>
+            <p>
+                    {!v.description}
+            </p>
+            <div>
+                TO DO: Rating asd
+            </div>
+            <hr/>
+            <p style="font-size: 1.3rem">
+                <lightning:formattedNumber value="{!v.productDetails.Price__c}"
+                                           style="currency"
+                                           currencyCode="USD"/>
+            </p>
+            <hr/>
+            <div style="display: flex; flex-direction: row; justify-content: space-around; height: 50px">
+                <lightning:button class="slds-size_4-of-12 slds-m-left_large" variant="brand" label="Add To Cart"
+                                  iconName="utility:cart" iconPosition="left"/>
+                <lightning:button class="slds-size_4-of-12 slds-m-right_large" variant="brand" label="Wishlist"
+                                  iconName="custom:custom1"/>
+            </div>
+            <div class="slds-m-around_large">
+                <h1 style="font-size: 1.4rem">Reviews</h1>
+                <div class="slds-m-top_medium">
+                    <p style="font-size: 1.2rem">comment</p>
+                    <p style="font-size: 1,1rem" class="slds-m-top_medium">Who | <span>when</span></p>
+                    <hr/>
+
+                    <p style="font-size: 1.2rem">comment</p>
+                    <p style="font-size: 1,1rem" class="slds-m-top_medium">Who | <span>when</span></p>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,26 @@
+.THIS.listContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.THIS .productTile {
+    width: 280px;
+    cursor: pointer;
+}
+
+.THIS .productTile:hover {
+    border-style: groove;
+    border-radius: 8px;
+    border-color: gray;
+}
+
+.THIS .image {
+    position: relative;
+    width: 100%;
+}
+
+.THIS .slds-carousel__indicators {
+    display: none
+}

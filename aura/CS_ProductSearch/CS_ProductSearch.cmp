@@ -1,0 +1,14 @@
+<aura:component description="CS_ProductSearch" controller="CS_ProductController"
+                implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:registerEvent name="searchProduct" type="c.CS_SearchProduct"/>
+    <aura:attribute name="query" type="String"/>
+    <lightning:navigation aura:id="navService"/>
+    <div onkeyup="{! c.handleKeyUp }" class="slds-size_11-of-12">
+            <lightning:input
+                    aura:id="enter-search"
+                    name="enter-search"
+                    type="search"
+                    value="{!v.query}"
+            />
+    </div>
+</aura:component>
