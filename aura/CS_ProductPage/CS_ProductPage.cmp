@@ -27,22 +27,11 @@
             <hr/>
             <div style="display: flex; flex-direction: row; justify-content: space-around; height: 50px">
                 <lightning:button class="slds-size_4-of-12 slds-m-left_large" variant="brand" label="Add To Cart"
-                                  iconName="utility:cart" iconPosition="left"/>
+                                  iconName="utility:cart" iconPosition="left" onclick="{!c.onAddToCart}"/>
                 <lightning:button class="slds-size_4-of-12 slds-m-right_large" variant="brand" label="Wishlist"
                                   iconName="custom:custom1"/>
             </div>
-            <div class="slds-m-around_large">
-                <h1 style="font-size: 1.4rem">Reviews</h1>
-                <div class="slds-m-top_medium">
-                    <p style="font-size: 1.2rem">comment</p>
-                    <p style="font-size: 1,1rem" class="slds-m-top_medium">Who | <span>when</span></p>
-                    <hr/>
-
-                    <p style="font-size: 1.2rem">comment</p>
-                    <p style="font-size: 1,1rem" class="slds-m-top_medium">Who | <span>when</span></p>
-                    <hr/>
-                </div>
-            </div>
+            <c:CS_ProductComment productId="{!v.productDetails.Id}"/>
         </div>
     </div>
 </aura:component>

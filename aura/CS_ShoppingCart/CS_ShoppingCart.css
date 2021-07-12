@@ -1,0 +1,23 @@
+.THIS {
+}
+
+.THIS .slds-carousel__indicators {
+    display: none
+}
+
+.THIS .shoppingCardListItem {
+    width: 100%;
+    border: 1px solid #D3D3D3;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.THIS .shoppingCardListItem:hover {
+}
+
+.THIS .pointer {
+    cursor: pointer;
+}

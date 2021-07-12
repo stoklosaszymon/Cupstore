@@ -35,10 +35,21 @@ public with sharing class CS_ProductController {
 
         for (Attachment attachment : attachments) {
             images.add(
-                 attachment.Body.toString()
+                    attachment.Body.toString()
             );
         }
 
         return images;
     }
+
+    @AuraEnabled
+    public static void addToCart(String productId) {
+        ShoppingCart__c shoppingCart = new ShoppingCart__c();
+        shoppingCart.Cup__c = productId;
+        shoppingCart.User__c = UserInfo.getUserId();
+        shoppingCart.Quantity__c = 1;
+
+        insert shoppingCart;
+    }
+
 }

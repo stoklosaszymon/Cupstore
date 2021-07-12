@@ -7,4 +7,14 @@
       });
       $A.enqueueAction(action);
     },
+    addToShoppingCart: function(component) {
+       var action = component.get("c.addToCart");
+       action.setParams({
+           "productId": component.get("v.productDetails.Id")
+       })
+       action.setCallback(this, function(response) {
+
+       });
+       $A.enqueueAction(action);
+    }
 })

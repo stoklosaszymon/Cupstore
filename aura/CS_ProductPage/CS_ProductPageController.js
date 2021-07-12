@@ -10,5 +10,8 @@
         console.log(idFromUrl);
         var id = event.getParam("productId");
         helper.getProduct(component, id);
+    },
+    onAddToCart: function(component, event, helper) {
+        helper.addToShoppingCart(component);
     }
 })

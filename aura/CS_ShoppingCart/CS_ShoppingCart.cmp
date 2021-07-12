@@ -1,0 +1,57 @@
+<aura:component description="CS_ShoppingCart" controller="CS_ShoppingCartController"
+                implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:attribute name="shoppingCart" type="ShoppingCart__c[]"/>
+    <aura:attribute name="overallSum" type="Decimal"/>
+    <div style="display:flex; flex-direction: row; justify-content: space-around">
+        <div style="width: 50%">
+            <aura:iteration items="{!v.shoppingCart}" var="product">
+                <div class="slds-m-around_medium shoppingCardListItem">
+                    <div class="slds-m-around_medium slds-align_absolute-center"
+                         style="height: 100%; width: 20%; display: flex; flex-direction: row;">
+                        <lightning:input type="checkbox" name="input1" class="slds-p-around_medium"/>
+                        <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
+                    </div>
+                    <p style="font-size: 1.3rem; font-weight: bold">
+                            {!product.Cup__r.Name}
+                    </p>
+                    <div>
+                        <div style="display: flex; flex-direction: row; align-items: center"
+                             class="slds-p-around_small">
+                            <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
+                                            size="x-small" class="pointer" data-id="{!product.Id}" onclick="{!c.onAdd}"/>
+                            <div style="font-size: 1rem; height: 100%; width:50%;"
+                                 class="slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
+                                    {!product.Quantity__c}
+                            </div>
+                            <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
+                                            size="x-small" class="pointer" data-id="{!product.Id}"/>
+                        </div>
+                    </div>
+                    <p style="font-size: 1.2rem" class="slds-m-right_medium">
+                        <lightning:formattedNumber value="{!product.Cup__r.Price__c}"
+                                                   style="currency"
+                                                   currencyCode="USD"/>
+                    </p>
+                    <p onclick="{!c.onRemove}" data-id="{!product.Id}" class="slds-m-around_small">
+                        <lightning:icon iconName="utility:clear" alternativeText="Event" title="Event"
+                                        size="medium" class="pointer"/>
+                    </p>
+                </div>
+            </aura:iteration>
+        </div>
+        <div class="slds-m-around_medium slds-p-around_medium"
+             style="width: 40%; height: 20%; border: 1px solid #D3D3D3; border-radius: 8px; display:flex; flex-direction: column">
+            <div style="width: 100%; display: flex; justify-content: flex-end">
+                <p style="font-size: 1.5rem; align-self: end">
+                    <lightning:formattedNumber value="{!v.overallSum}"
+                                               style="currency"
+                                               currencyCode="USD"/>
+                </p>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center">
+                <lightning:button type="button" label="Payment and Shipment"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

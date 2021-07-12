@@ -8,7 +8,7 @@
 
     <div class="listContainer">
         <aura:iteration items="{!v.products}" var="product" indexVar="index">
-            <div class="productTile  slds-p-around_x-large" data-id="{!product.Id}" onclick="{!c.handleSelect}">
+            <div class="productTile  slds-p-around_x-large slds-m-around_medium" data-id="{!product.Id}" onclick="{!c.handleSelect}">
                 <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
                     <c:CS_ProductCarouselImage id="{!product.Id}" aura:id="imgCarousel"/>
                 </div>
