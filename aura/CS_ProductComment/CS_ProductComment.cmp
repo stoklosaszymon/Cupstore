@@ -3,20 +3,27 @@
     <aura:attribute name="productId" type="String"/>
     <aura:attribute name="body" type="String"/>
     <aura:attribute name="reviews" type="ProductReview__c[]"/>
-    <div class="slds-m-top_medium">
+    <aura:attribute name="maxPageSize" type="Integer"/>
+    <aura:attribute name="page" type="Integer" default="1"/>
+    <aura:handler name="Rate" event="c:CS_RateProduct" action="{!c.onRate}"/>
+    <aura:attribute name="rating" type="Integer" default="0"/>
+    <div class="slds-m-around_large">
         <div>
-            <h1 style="font-size: 1.3rem">Reviews</h1>
-            <lightning:textarea name="input2" value="{!v.body}"/>
-            <lightning:button label="Add review" onclick="{!c.onAddReview}"/>
+            <h1 class="header">{!$Label.c.Reviews}</h1>
+            <lightning:textarea value="{!v.body}"/>
+            <c:CS_StarRating value="{!v.rating}"/>
+            <lightning:button label="{!$Label.c.Add_review}" onclick="{!c.onAddReview}"/>
         </div>
         <div class="slds-m-top_medium reviewsContainer">
             <aura:iteration items="{!v.reviews}" var="review">
                 <div class="slds-m-around_large">
                     <div class="slds-m-top_medium">
-                        <p style="font-size: 1.2rem">{!review.Body__c}</p>
-                        <p style="font-size: 1,1rem" class="slds-m-top_medium">{!review.User__r.Name}  |
+                        <c:CS_StarRating value="{!review.Rating__c}" readonly="true"/>
+                        <p class="commentBody">{!review.Body__c}</p>
+                        <p class="slds-m-top_medium">{!review.User__r.Name}  |
                             <span>
-                        <lightning:formattedDateTime value="{!review.Created_At__c}" year="numeric" month="numeric" day="numeric"
+                        <lightning:formattedDateTime value="{!review.Created_At__c}" year="numeric" month="numeric"
+                                                     day="numeric"
                                                      hour="2-digit"
                                                      minute="2-digit"
                                                      hour12="false"/>
@@ -26,6 +33,19 @@
                     </div>
                 </div>
             </aura:iteration>
+
+            <aura:if isTrue="{!v.maxPageSize > 0}">
+                <div class="pagination">
+                    <lightning:icon iconName="utility:chevronleft" alternativeText="{!$Label.c.Previous_page}"
+                                    title="{!$Label.c.Previous_page}"
+                                    size="x-small" class="pointer" onclick="{!c.onPrevPage}"/>
+                    <div class="slds-m-left_small slds-m-right_small">{!v.page} of {!v.maxPageSize}</div>
+                    <lightning:icon iconName="utility:chevronright" alternativeText="{!$Label.c.Next_page}"
+                                    title="{!$Label.c.Next_page}"
+                                    size="x-small" class="pointer" onclick="{!c.onNextPage}"/>
+
+                </div>
+            </aura:if>
         </div>
     </div>
 </aura:component>

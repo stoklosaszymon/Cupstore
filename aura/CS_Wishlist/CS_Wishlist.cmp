@@ -1,0 +1,8 @@
+<aura:component description="CS_Wishlist" controller="CS_WishlistController"
+                implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="wishlist" type="Wishlist__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:iteration items="{!v.wishlist}" var="product">
+        <div>{!product.Cup__r.Name}</div>
+    </aura:iteration>
+</aura:component>

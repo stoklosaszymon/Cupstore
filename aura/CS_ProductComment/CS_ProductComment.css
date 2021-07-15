@@ -2,6 +2,23 @@
 }
 
 .THIS .reviewsContainer {
-     max-height: 300px;
-     overflow-y: scroll;
+}
+
+.THIS .pointer {
+    cursor: pointer;
+}
+
+.THIS .header {
+    font-size: 1.3rem
+}
+
+.THIS .commentBody {
+    font-size: 1.2rem;
+}
+
+.THIS .pagination {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content:center;
 }

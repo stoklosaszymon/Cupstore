@@ -12,14 +12,13 @@
                 <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
                     <c:CS_ProductCarouselImage id="{!product.Id}" aura:id="imgCarousel"/>
                 </div>
-                <div style="width: 100%; text-align: center">
-                    <p style="font-weight: bold; font-size: 1.1rem">
+                <div class="productName">
+                    <p>
                             {!product.Name}
                     </p>
                     <p>
                         <lightning:formattedNumber value="{!product.Price__c}"
-                                                   style="currency"
-                                                   currencyCode="USD"/>
+                                                   style="currency"/>
                     </p>
                 </div>
             </div>

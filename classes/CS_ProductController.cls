@@ -1,55 +1,31 @@
 public with sharing class CS_ProductController {
     @AuraEnabled
     public static List<Cup__c> getProducts() {
-        return [SELECT Name, Price__c, Quantity__c FROM Cup__c];
+        return CS_ProductService.getProducts();
     }
 
     @AuraEnabled
     public static List<Cup__c> searchProduct(String query) {
-        query += '%';
-        return [
-                SELECT Name, Price__c, Quantity__c
-                FROM Cup__c
-                WHERE Name LIKE :query
-        ];
+        return CS_ProductService.searchProduct(query);
     }
 
     @AuraEnabled
     public static Cup__c getProduct(String id) {
-        return [
-                SELECT Name, Price__c, Quantity__c
-                FROM Cup__c
-                WHERE Id = :id
-        ];
+       return CS_ProductService.getProduct(id);
     }
 
     @AuraEnabled
     public static List<String> getProductAttachments(String id) {
-        List<String> images = new List<String>();
-        List<Attachment> attachments = [
-                SELECT Body
-                FROM Attachment
-                WHERE ParentId = :id
-        ];
-
-
-        for (Attachment attachment : attachments) {
-            images.add(
-                    attachment.Body.toString()
-            );
-        }
-
-        return images;
+        return CS_ProductService.getProductAttachments(id);
     }
 
     @AuraEnabled
-    public static void addToCart(String productId) {
-        ShoppingCart__c shoppingCart = new ShoppingCart__c();
-        shoppingCart.Cup__c = productId;
-        shoppingCart.User__c = UserInfo.getUserId();
-        shoppingCart.Quantity__c = 1;
-
-        insert shoppingCart;
+    public static void addToCart(String productId, Integer quantity) {
+        CS_ProductService.addToCart(productId, quantity);
     }
 
+    @AuraEnabled
+    public static Decimal getOverallRating(String productId) {
+       return CS_ProductService.getOverallRating(productId);
+    }
 }

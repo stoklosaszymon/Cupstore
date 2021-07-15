@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="CS_RateProduct">
+    <aura:attribute name="rating" type="Integer"/>
+</aura:event>

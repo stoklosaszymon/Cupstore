@@ -1,0 +1,20 @@
+<aura:component description="CS_AddToWishlist" controller="CS_WishlistController">
+    <aura:attribute name="isInWishlist" type="Boolean" default="false"/>
+    <aura:attribute name="productId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:if isTrue="{!v.isInWishlist}">
+        <lightning:icon class="icon favoriteIcon" iconName="custom:custom1"
+                        alternativeText="{!$Label.c.Wishlist}"
+                        title="{!$Label.c.Wishlist}"
+                        size="large"/>
+        <aura:set attribute="else">
+            <div onclick="{!c.onAddToWishlist}">
+                <lightning:icon class="icon" iconName="custom:custom1"
+                                alternativeText="{!$Label.c.Wishlist}"
+                                title="{!$Label.c.Wishlist}"
+                                size="large"
+                />
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -10,7 +10,7 @@
         <lightning:carousel disableAutoRefresh="false"
                             aura:id = "carousel"
                             disableAutoScroll="false"
-                            scrollDuration="2">
+                            scrollDuration="1">
             <aura:iteration items="{!v.attachments}" var="image">
                 <lightning:carouselImage class="carousel"
                                          src="{!'data:image/jpeg;base64, ' + image}">

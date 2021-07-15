@@ -6,10 +6,14 @@
     onRemove: function(component, event, helper) {
         var productId = event.currentTarget.dataset.id;
         helper.removeFromCart(component, productId);
+        helper.getOverallSum(component);
     },
-    onAdd: function(component, event, helper) {
-        var products = component.get("v.shoppingCart");
-        var productId = event.currentTarget.dataset.id;
-        console.log("p", productId);
+    onIncreaseQuantity: function(component, event, helper) {
+       var id = event.currentTarget.dataset.id;
+       helper.increaseQuantity(component, id);
+    },
+    onDecreaseQuantity: function(component, event, helper) {
+       var id = event.currentTarget.dataset.id;
+       helper.decreaseQuantity(component, id);
     }
 })

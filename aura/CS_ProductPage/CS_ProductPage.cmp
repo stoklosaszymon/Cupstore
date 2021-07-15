@@ -4,33 +4,55 @@
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="productDetails" type="Cup__c"/>
     <aura:attribute name="recordId" type="String"/>
-    <div style="display:flex; flex-direction: row" class="slds-m-top_medium">
+    <aura:attribute name="overallRating" type="Integer"/>
+    <aura:attribute name="isInWishlist" type="Boolean" default="false"/>
+    <aura:attribute name="quantity" type="Integer" default="1"/>
+    <div class="pageContainer slds-m-top_medium">
         <div class="slds-size_6-of-12">
             <c:CS_ProductCarouselImage id="{!v.productDetails.Id}"/>
         </div>
         <div class="slds-m-left_large" style="width: 100%">
-            <p style="font-size: 1.7rem; font-weight: bold">
+            <p class="productName">
                     {!v.productDetails.Name}
             </p>
-            <p>
-                    {!v.description}
+            <p class="productDescription">
+                    {!v.productDetails.Description__c}
             </p>
             <div>
-                TO DO: Rating
+                <c:CS_StarRating value="{!v.overallRating}"/>
             </div>
             <hr/>
-            <p style="font-size: 1.3rem">
+            <p class="productPrice">
                 <lightning:formattedNumber value="{!v.productDetails.Price__c}"
                                            style="currency"
-                                           currencyCode="USD"/>
+                />
             </p>
             <hr/>
-            <div style="display: flex; flex-direction: row; justify-content: space-around; height: 50px">
-                <lightning:button class="slds-size_4-of-12 slds-m-left_large" variant="brand" label="Add To Cart"
-                                  iconName="utility:cart" iconPosition="left" onclick="{!c.onAddToCart}"/>
-                <lightning:button class="slds-size_4-of-12 slds-m-right_large" variant="brand" label="Wishlist"
-                                  iconName="custom:custom1"/>
+            <div class="productDetailsContainer">
+                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.Colors__c}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.Material__c}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.Volume__c + ' ml'}"/>
             </div>
+            <div class="buttonsContainer">
+                <div class="quantityContainer slds-p-around_small slds-size_2-of-12">
+                    <div onclick="{!c.decreaseQuantity}" class="pointer">
+                        <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
+                                        size="x-small" class="pointer"/>
+                    </div>
+                    <div class="quantity slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
+                            {!v.quantity}
+                    </div>
+                    <div onclick="{!c.increaseQuantity}" class="pointer">
+                        <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
+                                        size="x-small" class="pointer"/>
+                    </div>
+                </div>
+                <lightning:button class="slds-size_8-of-12 addToCartButton" variant="brand"
+                                  label="{!$Label.c.Add_to_Cart}"
+                                  iconName="utility:cart" iconPosition="left" onclick="{!c.onAddToCart}"/>
+                <c:CS_AddToWishlist productId="{!v.recordId}"/>
+            </div>
+            <hr/>
             <c:CS_ProductComment productId="{!v.productDetails.Id}"/>
         </div>
     </div>

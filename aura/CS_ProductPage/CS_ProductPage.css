@@ -1,0 +1,80 @@
+.THIS {
+}
+
+.THIS .productDescription {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.THIS .productName {
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.THIS .productPrice {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: red;
+}
+
+.THIS .productDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-height: 300px;
+}
+
+.THIS .buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 50px;
+}
+
+.THIS.pageContainer {
+    display:flex;
+    flex-direction: row;
+}
+
+.THIS .quantityContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bold;
+    border: solid 1px black;
+    border-radius: 40px;
+}
+
+.THIS .icon {
+    border: 1px solid black;
+    --sds-c-icon-color-background: white;
+    --sds-c-icon-color-foreground: black;
+    border-radius: 50%;
+}
+
+.THIS .favoriteIcon {
+    --sds-c-icon-color-foreground: red;
+}
+
+.THIS .pointer {
+    cursor: pointer;
+}
+
+.THIS .addToCartButton {
+    animation: wiggle 20s infinite ease-in-out;
+    border-radius: 40px;
+}
+
+@keyframes wiggle {
+  0%   {left:0px;}
+  0.5%  {left:10px;}
+  1%  {left:-10px;}
+  1.5%  {left:10px;}
+  2%  {left:-10px;}
+  2.5%  {left:10px;}
+  3%  {left:-10px;}
+  3.5%  {left:10px;}
+  4%  {left:-10px;}
+  4%, 100%  {left:0px;}
+}

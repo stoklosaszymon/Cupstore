@@ -1,0 +1,9 @@
+<aura:component description="CS_ProductInfo">
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="value" type="String"/>
+    <div class="slds-m-around_small">
+        <p class="label">{!v.label}</p>
+        <p class="value">{!v.value}</p>
+        <hr/>
+    </div>
+</aura:component>

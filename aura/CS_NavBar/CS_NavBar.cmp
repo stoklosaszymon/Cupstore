@@ -3,17 +3,18 @@
     <lightning:navigation aura:id="navService"/>
     <div class="navMenu" style="border-bottom: groove gray">
         <div style="cursor: pointer;" onclick="{!c.goToHome}">
-            <lightning:icon iconName="utility:home" alternativeText="Cart" title="Cart"/>
+            <lightning:icon iconName="utility:home" alternativeText="{!$Label.c.Home}" title="{!$Label.c.Home}"/>
         </div>
         <div class="slds-size_5-of-12">
             <c:CS_ProductSearch/>
         </div>
         <div>
            <span style="cursor: pointer" onclick="{!c.goToCart}">
-           <lightning:icon iconName="utility:cart" alternativeText="Cart" title="Cart" class="slds-m-right_large"/>
+           <lightning:icon iconName="utility:cart" alternativeText="{!$Label.c.Cart}" title="{!$Label.c.Cart}"
+                           class="slds-m-right_large"/>
            </span>
-           <span style="cursor: pointer" onclick="{!c.goToWishlist}">
-           <lightning:icon iconName="custom:custom1" alternativeText="Wishlist" title="Wishlist"/>
+            <span style="cursor: pointer" onclick="{!c.goToWishlist}">
+           <lightning:icon iconName="custom:custom1" alternativeText="{!$Label.c.Wishlist}" title="{!$Label.c.Wishlist}"/>
            </span>
         </div>
     </div>

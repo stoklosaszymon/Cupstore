@@ -2,13 +2,12 @@
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="shoppingCart" type="ShoppingCart__c[]"/>
-    <aura:attribute name="overallSum" type="Decimal"/>
-    <div style="display:flex; flex-direction: row; justify-content: space-around">
-        <div style="width: 50%">
+    <aura:attribute name="overallSum" type="Decimal" default="0"/>
+    <div class="container">
+        <div class="childContainer">
             <aura:iteration items="{!v.shoppingCart}" var="product">
                 <div class="slds-m-around_medium shoppingCardListItem">
-                    <div class="slds-m-around_medium slds-align_absolute-center"
-                         style="height: 100%; width: 20%; display: flex; flex-direction: row;">
+                    <div class="imgContainer slds-m-around_medium slds-align_absolute-center">
                         <lightning:input type="checkbox" name="input1" class="slds-p-around_medium"/>
                         <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
                     </div>
@@ -16,22 +15,24 @@
                             {!product.Cup__r.Name}
                     </p>
                     <div>
-                        <div style="display: flex; flex-direction: row; align-items: center"
-                             class="slds-p-around_small">
-                            <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
-                                            size="x-small" class="pointer" data-id="{!product.Id}" onclick="{!c.onAdd}"/>
-                            <div style="font-size: 1rem; height: 100%; width:50%;"
-                                 class="slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
+                        <div class="quantityContainer slds-p-around_small">
+                            <div data-id="{!product.Id}" onclick="{!c.onDecreaseQuantity}">
+                                <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
+                                                size="x-small" class="pointer"/>
+                            </div>
+                            <div class="quantity slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
                                     {!product.Quantity__c}
                             </div>
-                            <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
-                                            size="x-small" class="pointer" data-id="{!product.Id}"/>
+                            <div data-id="{!product.Id}" onclick="{!c.onIncreaseQuantity}">
+                                <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
+                                                size="x-small" class="pointer"/>
+                            </div>
                         </div>
                     </div>
                     <p style="font-size: 1.2rem" class="slds-m-right_medium">
-                        <lightning:formattedNumber value="{!product.Cup__r.Price__c}"
+                        <lightning:formattedNumber value="{!product.Cup__r.Price__c * product.Quantity__c}"
                                                    style="currency"
-                                                   currencyCode="USD"/>
+                        />
                     </p>
                     <p onclick="{!c.onRemove}" data-id="{!product.Id}" class="slds-m-around_small">
                         <lightning:icon iconName="utility:clear" alternativeText="Event" title="Event"
@@ -39,17 +40,26 @@
                     </p>
                 </div>
             </aura:iteration>
+            <aura:if isTrue="{!v.shoppingCart.length == 0}">
+                <div class="slds-m-around_medium emptyCart">
+                    <lightning:icon iconName="utility:cart" alternativeText="{!$Label.c.Cart}" title="{!$Label.c.Cart}"
+                                    class="slds-m-right_large" size="large"/>
+                        {!$Label.c.Empty_Cart}
+                </div>
+            </aura:if>
         </div>
-        <div class="slds-m-around_medium slds-p-around_medium"
-             style="width: 40%; height: 20%; border: 1px solid #D3D3D3; border-radius: 8px; display:flex; flex-direction: column">
-            <div style="width: 100%; display: flex; justify-content: flex-end">
-                <p style="font-size: 1.5rem; align-self: end">
-                    <lightning:formattedNumber value="{!v.overallSum}"
-                                               style="currency"
-                                               currencyCode="USD"/>
+        <div class="slds-m-around_medium slds-p-around_medium overallContainer">
+            <div class="overallPriceContainer">
+                <br/>
+                <p class="priceContainer">
+                    <span>{!$Label.c.Subtotal + ': '}</span>
+                    <span class="price">
+                        <lightning:formattedNumber value="{!v.overallSum}"
+                                                   style="currency"/>
+                    </span>
                 </p>
             </div>
-            <div style="width: 100%; display: flex; justify-content: center">
+            <div class="paymentButton">
                 <lightning:button type="button" label="Payment and Shipment"/>
             </div>
         </div>

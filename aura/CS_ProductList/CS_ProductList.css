@@ -29,3 +29,9 @@
     width: 100%;
 }
 
+.THIS .productName {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
