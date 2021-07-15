@@ -19,7 +19,7 @@
                     {!v.productDetails.Description__c}
             </p>
             <div>
-                <c:CS_StarRating value="{!v.overallRating}"/>
+                <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
             </div>
             <hr/>
             <p class="productPrice">
