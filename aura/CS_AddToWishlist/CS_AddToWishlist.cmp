@@ -3,15 +3,15 @@
     <aura:attribute name="productId" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:if isTrue="{!v.isInWishlist}">
-        <lightning:icon class="icon favoriteIcon" iconName="custom:custom1"
+        <lightning:icon class="favoriteIcon" iconName="custom:custom1"
                         alternativeText="{!$Label.c.Wishlist}"
                         title="{!$Label.c.Wishlist}"
                         size="large"/>
         <aura:set attribute="else">
             <div onclick="{!c.onAddToWishlist}">
                 <lightning:icon class="icon" iconName="custom:custom1"
-                                alternativeText="{!$Label.c.Wishlist}"
-                                title="{!$Label.c.Wishlist}"
+                                alternativeText="{!$Label.c.Add_to_Wishlist}"
+                                title="{!$Label.c.Add_to_Wishlist}"
                                 size="large"
                 />
             </div>

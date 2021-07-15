@@ -2,7 +2,39 @@
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="wishlist" type="Wishlist__c[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
-    <aura:iteration items="{!v.wishlist}" var="product">
-        <div>{!product.Cup__r.Name}</div>
-    </aura:iteration>
+    <lightning:navigation aura:id="navService"/>
+    <div class="container">
+        <div class="childContainer">
+            <aura:iteration items="{!v.wishlist}" var="product">
+                <div class="slds-m-around_medium shoppingCardListItem">
+                    <div class="subContainer" data-id="{!product.Cup__r.Id}" onclick="{!c.onRedirect}">
+                        <div class="imgContainer slds-m-around_medium slds-align_absolute-center">
+                            <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
+                        </div>
+                        <p style="font-size: 1.3rem; font-weight: bold">
+                                {!product.Cup__r.Name}
+                        </p>
+                        <p style="font-size: 1.2rem" class="slds-m-right_medium">
+                            <lightning:formattedNumber value="{!product.Cup__r.Price__c}"
+                                                       style="currency"
+                            />
+                        </p>
+                    </div>
+                    <p onclick="{!c.onRemove}" data-id="{!product.Id}" class="slds-m-around_small">
+                        <lightning:icon iconName="utility:clear" alternativeText="{!$Label.c.Remove_from_Wishlist}"
+                                        title="{!$Label.c.Remove_from_Wishlist}"
+                                        size="medium" class="pointer"/>
+                    </p>
+                </div>
+            </aura:iteration>
+            <aura:if isTrue="{!v.wishlist.length == 0}">
+                <div class="slds-m-around_medium emptyCart">
+                    <lightning:icon iconName="custom:custom1" alternativeText="{!$Label.c.Cart}"
+                                    title="{!$Label.c.Cart}"
+                                    class="slds-m-right_large" size="large"/>
+                        {!$Label.c.Empty_Cart}
+                </div>
+            </aura:if>
+        </div>
+    </div>
 </aura:component>

@@ -10,8 +10,8 @@
     <div class="slds-m-around_large">
         <div>
             <h1 class="header">{!$Label.c.Reviews}</h1>
-            <lightning:textarea value="{!v.body}"/>
             <c:CS_StarRating value="{!v.rating}"/>
+            <lightning:textarea value="{!v.body}"/>
             <lightning:button label="{!$Label.c.Add_review}" onclick="{!c.onAddReview}"/>
         </div>
         <div class="slds-m-top_medium reviewsContainer">

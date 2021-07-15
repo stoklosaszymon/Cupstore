@@ -4,6 +4,8 @@
        action.setCallback(this, function(response) {
            if (response.getReturnValue() != null) {
                component.set("v.overallSum", response.getReturnValue());
+           } else {
+               component.set("v.overallSum", 0);
            }
        });
        $A.enqueueAction(action);
@@ -12,6 +14,7 @@
         var action = component.get("c.getCartProducts");
         action.setCallback(this, function(response) {
             component.set("v.shoppingCart", response.getReturnValue());
+            console.log(response.getReturnValue())
         });
         $A.enqueueAction(action);
     },
@@ -48,4 +51,14 @@
         });
         $A.enqueueAction(action);
     },
+    selectProduct: function(component, id) {
+        var action = component.get("c.selectProduct");
+        action.setParams({
+            "id": id
+        });
+        action.setCallback(this, function(response) {
+            this.getOverallSum(component);
+        })
+        $A.enqueueAction(action);
+    }
 })

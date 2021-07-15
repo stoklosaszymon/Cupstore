@@ -15,5 +15,9 @@
     onDecreaseQuantity: function(component, event, helper) {
        var id = event.currentTarget.dataset.id;
        helper.decreaseQuantity(component, id);
+    },
+    onSelect: function(component, event, helper) {
+        var productId = event.getSource().get("v.name");
+        helper.selectProduct(component, productId);
     }
 })

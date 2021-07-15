@@ -42,6 +42,7 @@ public with sharing class CS_ProductService {
         shoppingCart.User__c = UserInfo.getUserId();
         shoppingCart.Quantity__c = 1;
         shoppingCart.Quantity__c = quantity;
+        shoppingCart.Selected__c = true;
         insert shoppingCart;
     }
 

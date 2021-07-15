@@ -15,4 +15,9 @@ public with sharing class CS_WishlistController {
     public static List<Wishlist__c> getWishlist() {
         return CS_WishlistService.getWishlist();
     }
+
+    @AuraEnabled
+    public static void removeFromWishlist(String id) {
+        CS_WishlistService.removeFromWishlist(id);
+    }
 }

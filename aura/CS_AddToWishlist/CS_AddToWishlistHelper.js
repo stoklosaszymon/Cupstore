@@ -17,8 +17,17 @@
             "productId": component.get("v.productId")
         });
         action.setCallback(this, function(response){
-            console.log("added");
+            this.showToast(component);
         });
         $A.enqueueAction(action);
-    }
+    },
+   showToast : function(component) {
+       var toastEvent = $A.get("e.force:showToast");
+       toastEvent.setParams({
+           "title": $A.get("$Label.c.Success"),
+           "message": $A.get("$Label.c.Added_to_Wishlist"),
+           "type": "success"
+       });
+       toastEvent.fire();
+   }
 })

@@ -23,4 +23,9 @@ public with sharing class CS_ShoppingCartController {
     public static Decimal decreaseQuantity(String id) {
        return CS_ShoppingCartService.decreaseQuantity(id);
     }
+
+    @AuraEnabled
+    public static Boolean selectProduct(String id) {
+       return CS_ShoppingCartService.selectProduct(id);
+    }
 }

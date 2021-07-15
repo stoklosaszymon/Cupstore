@@ -46,17 +46,6 @@
     border-radius: 40px;
 }
 
-.THIS .icon {
-    border: 1px solid black;
-    --sds-c-icon-color-background: white;
-    --sds-c-icon-color-foreground: black;
-    border-radius: 50%;
-}
-
-.THIS .favoriteIcon {
-    --sds-c-icon-color-foreground: red;
-}
-
 .THIS .pointer {
     cursor: pointer;
 }

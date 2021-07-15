@@ -32,4 +32,15 @@ public with sharing class CS_WishlistService {
         ];
         return wishlist;
     }
+
+    public static void removeFromWishlist(String id) {
+        String userId = UserInfo.getUserId();
+        List<Wishlist__c> wishlist = [
+                SELECT Id
+                FROM Wishlist__c
+                WHERE User__c = :userId
+                AND Id = :id
+        ];
+        delete wishlist;
+    }
 }

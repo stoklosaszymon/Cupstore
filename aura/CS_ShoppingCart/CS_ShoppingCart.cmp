@@ -8,7 +8,8 @@
             <aura:iteration items="{!v.shoppingCart}" var="product">
                 <div class="slds-m-around_medium shoppingCardListItem">
                     <div class="imgContainer slds-m-around_medium slds-align_absolute-center">
-                        <lightning:input type="checkbox" name="input1" class="slds-p-around_medium"/>
+                        <lightning:input checked="{!product.Selected__c}" type="checkbox"
+                                         class="slds-p-around_medium" name="{!product.Id}" onchange="{!c.onSelect}"/>
                         <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
                     </div>
                     <p style="font-size: 1.3rem; font-weight: bold">
@@ -17,14 +18,16 @@
                     <div>
                         <div class="quantityContainer slds-p-around_small">
                             <div data-id="{!product.Id}" onclick="{!c.onDecreaseQuantity}">
-                                <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
+                                <lightning:icon iconName="utility:dash" alternativeText="{!$Label.c.Remove}"
+                                                title="{!$Label.c.Remove}"
                                                 size="x-small" class="pointer"/>
                             </div>
                             <div class="quantity slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
                                     {!product.Quantity__c}
                             </div>
                             <div data-id="{!product.Id}" onclick="{!c.onIncreaseQuantity}">
-                                <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
+                                <lightning:icon iconName="utility:add" alternativeText="{!$Label.c.Add}"
+                                                title="{!$Label.c.Add}"
                                                 size="x-small" class="pointer"/>
                             </div>
                         </div>
@@ -35,7 +38,8 @@
                         />
                     </p>
                     <p onclick="{!c.onRemove}" data-id="{!product.Id}" class="slds-m-around_small">
-                        <lightning:icon iconName="utility:clear" alternativeText="Event" title="Event"
+                        <lightning:icon iconName="utility:clear" alternativeText="{!$Label.c.Remove_from_Cart}"
+                                        title="{!$Label.c.Remove_from_Cart}"
                                         size="medium" class="pointer"/>
                     </p>
                 </div>
@@ -59,7 +63,7 @@
                     </span>
                 </p>
             </div>
-            <div class="paymentButton">
+            <div class="paymentButton slds-m-around_medium">
                 <lightning:button type="button" label="Payment and Shipment"/>
             </div>
         </div>
