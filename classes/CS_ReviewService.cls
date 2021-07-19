@@ -10,9 +10,9 @@ public with sharing class CS_ReviewService {
         insert review;
     }
 
-    public static List<ProductReview__c> getThreeReviews(String productId, Integer page) {
+    public static List<CS_ReviewWrapper> getThreeReviews(String productId, Integer page) {
         Integer offset = (page * 3) - 3;
-        return [
+         List<ProductReview__c> reviews = [
                 SELECT Id, Body__c, Created_At__c, Rating__c, User__r.Name
                 FROM ProductReview__c
                 WHERE Cup__c = :productId
@@ -20,6 +20,7 @@ public with sharing class CS_ReviewService {
                 LIMIT 3
                 OFFSET :offset
         ];
+        return parseToWrapper(reviews);
     }
 
     public static Integer getCommentsCount(String productId) {
@@ -28,5 +29,20 @@ public with sharing class CS_ReviewService {
                 FROM ProductReview__c
                 WHERE Cup__c = :productId
         ];
+    }
+
+    private static List<CS_ReviewWrapper> parseToWrapper(List<ProductReview__c> reviews) {
+        List<CS_ReviewWrapper> wrapper = new List<CS_ReviewWrapper>();
+        for (ProductReview__c review : reviews) {
+            wrapper.add(
+                    new CS_ReviewWrapper(
+                            review.Id,
+                            review.Body__c,
+                            review.Created_At__c,
+                            review.Rating__c,
+                            review.User__r.Name
+                    ));
+        }
+        return wrapper;
     }
 }

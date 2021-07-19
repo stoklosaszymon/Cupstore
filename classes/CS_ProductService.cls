@@ -13,12 +13,13 @@ public with sharing class CS_ProductService {
         ];
     }
 
-    public static Cup__c getProduct(String id) {
-        return [
+    public static CS_ProductWrapper getProduct(String id) {
+        Cup__c cup = [
                 SELECT Name, Price__c, Quantity__c, Colors__c, Description__c, Material__c, Volume__c
                 FROM Cup__c
                 WHERE Id = :id
         ];
+        return parseToWrapper(cup);
     }
 
     public static List<String> getProductAttachments(String id) {
@@ -53,5 +54,28 @@ public with sharing class CS_ProductService {
                 WHERE Cup__c = :productId
         ];
         return (Decimal) reviews.get('rating');
+    }
+
+    private static List<CS_ProductWrapper> parseToWrapperList(List<Cup__c> cups) {
+        List<CS_ProductWrapper> wrapper = new List<CS_ProductWrapper>();
+        for (Cup__c cup : cups) {
+            wrapper.add(
+                    parseToWrapper(cup)
+            );
+        }
+        return wrapper;
+    }
+
+    private static CS_ProductWrapper parseToWrapper(Cup__c cup) {
+        CS_ProductWrapper wrapper = new CS_ProductWrapper(
+                cup.Id,
+                cup.Name,
+                cup.Price__c,
+                cup.Colors__c,
+                cup.Description__c,
+                cup.Material__c,
+                cup.Volume__c
+        );
+        return wrapper;
     }
 }

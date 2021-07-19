@@ -6,7 +6,7 @@ public with sharing class CS_ReviewController {
     }
 
     @AuraEnabled
-    public static List<ProductReview__c> getThreeReviews(String productId, Integer page) {
+    public static List<CS_ReviewWrapper> getThreeReviews(String productId, Integer page) {
        return CS_ReviewService.getThreeReviews(productId, page);
     }
 

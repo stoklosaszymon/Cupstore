@@ -100,3 +100,7 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.THIS .checkbox {
+    transform: scale(1.5);
+}

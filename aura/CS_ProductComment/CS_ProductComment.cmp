@@ -2,7 +2,7 @@
     <aura:handler name="change" value="{!v.productId}" action="{!c.onChange}"/>
     <aura:attribute name="productId" type="String"/>
     <aura:attribute name="body" type="String"/>
-    <aura:attribute name="reviews" type="ProductReview__c[]"/>
+    <aura:attribute name="reviews" type="CS_ReviewWrapper[]"/>
     <aura:attribute name="maxPageSize" type="Integer"/>
     <aura:attribute name="page" type="Integer" default="1"/>
     <aura:handler name="Rate" event="c:CS_RateProduct" action="{!c.onRate}"/>
@@ -18,11 +18,11 @@
             <aura:iteration items="{!v.reviews}" var="review">
                 <div class="slds-m-around_large">
                     <div class="slds-m-top_medium">
-                        <c:CS_StarRating value="{!review.Rating__c}" readonly="true"/>
-                        <p class="commentBody">{!review.Body__c}</p>
-                        <p class="slds-m-top_medium">{!review.User__r.Name}  |
+                        <c:CS_StarRating value="{!review.rating}" readonly="true"/>
+                        <p class="commentBody">{!review.body}</p>
+                        <p class="slds-m-top_medium">{!review.userName}  |
                             <span>
-                        <lightning:formattedDateTime value="{!review.Created_At__c}" year="numeric" month="numeric"
+                        <lightning:formattedDateTime value="{!review.createdAt}" year="numeric" month="numeric"
                                                      day="numeric"
                                                      hour="2-digit"
                                                      minute="2-digit"
@@ -33,7 +33,6 @@
                     </div>
                 </div>
             </aura:iteration>
-
             <aura:if isTrue="{!v.maxPageSize > 0}">
                 <div class="pagination">
                     <lightning:icon iconName="utility:chevronleft" alternativeText="{!$Label.c.Previous_page}"
@@ -43,7 +42,6 @@
                     <lightning:icon iconName="utility:chevronright" alternativeText="{!$Label.c.Next_page}"
                                     title="{!$Label.c.Next_page}"
                                     size="x-small" class="pointer" onclick="{!c.onNextPage}"/>
-
                 </div>
             </aura:if>
         </div>

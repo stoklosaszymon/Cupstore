@@ -2,37 +2,42 @@
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
     <aura:handler event="c.CS_SelectProduct" action="{!c.handleSelect}"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
-    <aura:attribute name="productDetails" type="Cup__c"/>
+    <aura:attribute name="productDetails" type="CS_ProductWrapper"/>
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="overallRating" type="Integer"/>
     <aura:attribute name="isInWishlist" type="Boolean" default="false"/>
     <aura:attribute name="quantity" type="Integer" default="1"/>
     <div class="pageContainer slds-m-top_medium">
         <div class="slds-size_6-of-12">
-            <c:CS_ProductCarouselImage id="{!v.productDetails.Id}"/>
+            <c:CS_ProductCarouselImage id="{!v.recordId}"/>
         </div>
         <div class="slds-m-left_large" style="width: 100%">
             <p class="productName">
-                    {!v.productDetails.Name}
+                    {!v.productDetails.name}
             </p>
             <p class="productDescription">
-                    {!v.productDetails.Description__c}
+                    {!v.productDetails.description}
             </p>
             <div>
                 <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
             </div>
             <hr/>
             <p class="productPrice">
-                <lightning:formattedNumber value="{!v.productDetails.Price__c}"
+                <lightning:formattedNumber value="{!v.productDetails.price}"
                                            style="currency"
                 />
             </p>
             <hr/>
+            <p>
+               {!v.productDetails.description}
+            </p>
+            <hr/>
             <div class="productDetailsContainer">
-                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.Colors__c}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.Material__c}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.Volume__c + ' ml'}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.colors}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.material}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.volume + ' ml'}"/>
             </div>
+
             <div class="buttonsContainer">
                 <div class="quantityContainer slds-p-around_small slds-size_2-of-12">
                     <div onclick="{!c.decreaseQuantity}" class="pointer">
@@ -53,7 +58,7 @@
                 <c:CS_AddToWishlist productId="{!v.recordId}"/>
             </div>
             <hr/>
-            <c:CS_ProductComment productId="{!v.productDetails.Id}"/>
+            <c:CS_ProductComment productId="{!v.productDetails.id}"/>
         </div>
     </div>
 </aura:component>

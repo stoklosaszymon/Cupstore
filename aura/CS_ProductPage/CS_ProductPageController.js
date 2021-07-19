@@ -5,7 +5,6 @@
         helper.getOverallRating(component, id);
     },
     handleSelect: function(component, event, helper) {
-        var idFromUrl = component.get("v.productId");
         var id = event.getParam("productId");
         helper.getProduct(component, id);
     },
@@ -13,13 +12,9 @@
         helper.addToShoppingCart(component);
     },
     increaseQuantity: function(component, event, helper) {
-        var quantity = component.get("v.quantity");
-        component.set("v.quantity", quantity + 1);
+       helper.increaseQuantity(component);
     },
     decreaseQuantity: function(component, event, helper) {
-       var quantity = component.get("v.quantity");
-       if (quantity > 1) {
-        component.set("v.quantity", quantity - 1);
-       }
+      helper.decreaseQuantity(component);
     }
 })

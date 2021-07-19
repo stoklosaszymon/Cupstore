@@ -10,7 +10,7 @@ public with sharing class CS_ProductController {
     }
 
     @AuraEnabled
-    public static Cup__c getProduct(String id) {
+    public static CS_ProductWrapper getProduct(String id) {
        return CS_ProductService.getProduct(id);
     }
 

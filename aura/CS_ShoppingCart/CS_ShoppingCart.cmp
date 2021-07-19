@@ -9,12 +9,15 @@
                 <div class="slds-m-around_medium shoppingCardListItem">
                     <div class="imgContainer slds-m-around_medium slds-align_absolute-center">
                         <lightning:input checked="{!product.Selected__c}" type="checkbox"
-                                         class="slds-p-around_medium" name="{!product.Id}" onchange="{!c.onSelect}"/>
+                                         class="slds-m-right_large checkbox" name="{!product.Id}"
+                                         onchange="{!c.onSelect}"/>
                         <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
                     </div>
-                    <p style="font-size: 1.3rem; font-weight: bold">
-                            {!product.Cup__r.Name}
-                    </p>
+                    <div style="min-width: 130px" class="slds-m-around_small">
+                        <p style="font-size: 1.3rem; font-weight: bold: width: 100%">
+                                {!product.Cup__r.Name}
+                        </p>
+                    </div>
                     <div>
                         <div class="quantityContainer slds-p-around_small">
                             <div data-id="{!product.Id}" onclick="{!c.onDecreaseQuantity}">
@@ -51,21 +54,23 @@
                         {!$Label.c.Empty_Cart}
                 </div>
             </aura:if>
+            s
         </div>
-        <div class="slds-m-around_medium slds-p-around_medium overallContainer">
-            <div class="overallPriceContainer">
-                <br/>
-                <p class="priceContainer">
-                    <span>{!$Label.c.Subtotal + ': '}</span>
-                    <span class="price">
+
+            <div class="slds-m-around_medium slds-p-around_medium overallContainer">
+                <div class="overallPriceContainer">
+                    <br/>
+                    <p class="priceContainer">
+                        <span>{!$Label.c.Subtotal + ': '}</span>
+                        <span class="price">
                         <lightning:formattedNumber value="{!v.overallSum}"
                                                    style="currency"/>
                     </span>
-                </p>
+                    </p>
+                </div>
+                <div class="paymentButton slds-m-around_medium">
+                    <lightning:button type="button" label="Payment and Shipment"/>
+                </div>
             </div>
-            <div class="paymentButton slds-m-around_medium">
-                <lightning:button type="button" label="Payment and Shipment"/>
-            </div>
-        </div>
     </div>
 </aura:component>
