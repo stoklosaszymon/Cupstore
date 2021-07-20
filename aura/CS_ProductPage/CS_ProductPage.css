@@ -50,9 +50,21 @@
     cursor: pointer;
 }
 
+.THIS .header {
+    font-size: 1.3rem;
+}
+
+.THIS .description {
+    font-size: 1rem;
+}
+
 .THIS .addToCartButton {
     animation: wiggle 20s infinite ease-in-out;
     border-radius: 40px;
+}
+
+.THIS .overall {
+    font-size: 1.2rem;
 }
 
 @keyframes wiggle {

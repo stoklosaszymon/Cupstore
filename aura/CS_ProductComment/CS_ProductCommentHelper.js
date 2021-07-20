@@ -6,9 +6,12 @@
            "page": component.get("v.page")
        });
        action.setCallback(this, function(response) {
-           let result = response.getReturnValue();
-           console.log("result", response.getReturnValue());
-           component.set("v.reviews", result)
+           let state = response.getState();
+           if (state == 'SUCCESS') {
+              component.set("v.reviews", response.getReturnValue());
+           } else {
+              this.handleMessage($A.get("$Label.c.Error"), $A.get("$Label.c.Error_Get_Reviews"), "error");
+           }
       });
       $A.enqueueAction(action);
     },
@@ -19,8 +22,11 @@
             "productId" : component.get("v.productId"),
         });
         action.setCallback(this, function(response) {
-            let result = response.getReturnValue();
-            component.set("v.maxPageSize", Math.ceil(result / 3));
+           let state = response.getState();
+           if (state == 'SUCCESS') {
+              let result = response.getReturnValue();
+              component.set("v.maxPageSize", Math.ceil(result / 3));
+           }
         });
         $A.enqueueAction(action);
     },
@@ -33,9 +39,15 @@
             "productId": component.get("v.productId"),
         });
         action.setCallback(this, function(response){
-            this.getReviews(component);
-            component.set("v.rating", 0);
-            component.set("v.body", '');
+            let state = response.getState();
+            if (state == 'SUCCESS') {
+                this.getReviews(component);
+                component.set("v.rating", 0);
+                component.set("v.body", '');
+                this.handleMessage($A.get("$Label.c.Success"), $A.get("$Label.c.Review_Added"), 'success');
+            } else {
+                this.handleMessage($A.get("$Label.c.Error"), $A.get("$Label.c.Error_Add_Review"), 'error');
+            }
         });
         $A.enqueueAction(action);
     },

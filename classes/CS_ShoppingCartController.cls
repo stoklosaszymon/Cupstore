@@ -1,6 +1,6 @@
 public with sharing class CS_ShoppingCartController {
     @AuraEnabled
-    public static List<ShoppingCart__c> getCartProducts() {
+    public static List<CS_ShoppingCartWrapper> getCartProducts() {
        return CS_ShoppingCartService.getCartProducts();
     }
 

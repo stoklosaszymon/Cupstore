@@ -39,7 +39,7 @@ public with sharing class CS_WishlistService {
                 SELECT Id
                 FROM Wishlist__c
                 WHERE User__c = :userId
-                AND Id = :id
+                AND (Id = :id OR Cup__c =: id)
         ];
         delete wishlist;
     }

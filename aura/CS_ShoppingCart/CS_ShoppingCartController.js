@@ -4,20 +4,16 @@
        helper.getOverallSum(component);
     },
     onRemove: function(component, event, helper) {
-        var productId = event.currentTarget.dataset.id;
-        helper.removeFromCart(component, productId);
-        helper.getOverallSum(component);
+        helper.setRemovedClass(component, event);
+        helper.removeFromCart(component, event);
     },
     onIncreaseQuantity: function(component, event, helper) {
-       var id = event.currentTarget.dataset.id;
-       helper.increaseQuantity(component, id);
+       helper.increaseQuantity(component, event);
     },
     onDecreaseQuantity: function(component, event, helper) {
-       var id = event.currentTarget.dataset.id;
-       helper.decreaseQuantity(component, id);
+       helper.decreaseQuantity(component, event);
     },
     onSelect: function(component, event, helper) {
-        var productId = event.getSource().get("v.name");
-        helper.selectProduct(component, productId);
+        helper.selectProduct(component, event);
     }
 })

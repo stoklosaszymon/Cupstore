@@ -1,4 +1,4 @@
-<aura:component description="CS_ProductComment" controller="CS_ReviewController">
+<aura:component description="CS_ProductComment" controller="CS_ReviewController" extends="c:CS_ErrorHandler">
     <aura:handler name="change" value="{!v.productId}" action="{!c.onChange}"/>
     <aura:attribute name="productId" type="String"/>
     <aura:attribute name="body" type="String"/>

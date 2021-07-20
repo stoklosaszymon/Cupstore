@@ -15,7 +15,7 @@ public with sharing class CS_ProductService {
 
     public static CS_ProductWrapper getProduct(String id) {
         Cup__c cup = [
-                SELECT Name, Price__c, Quantity__c, Colors__c, Description__c, Material__c, Volume__c
+                SELECT Name, Price__c, Quantity__c, Colors__c, Description__c, Material__c, Volume__c, Short_Description__c
                 FROM Cup__c
                 WHERE Id = :id
         ];
@@ -41,7 +41,6 @@ public with sharing class CS_ProductService {
         ShoppingCart__c shoppingCart = new ShoppingCart__c();
         shoppingCart.Cup__c = productId;
         shoppingCart.User__c = UserInfo.getUserId();
-        shoppingCart.Quantity__c = 1;
         shoppingCart.Quantity__c = quantity;
         shoppingCart.Selected__c = true;
         insert shoppingCart;
@@ -73,6 +72,7 @@ public with sharing class CS_ProductService {
                 cup.Price__c,
                 cup.Colors__c,
                 cup.Description__c,
+                cup.Short_Description__c,
                 cup.Material__c,
                 cup.Volume__c
         );

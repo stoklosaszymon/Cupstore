@@ -10,6 +10,8 @@ public with sharing class CS_ProductWrapper {
     @AuraEnabled
     public String description { get; set; }
     @AuraEnabled
+    public String shortDescription { get; set; }
+    @AuraEnabled
     public String material { get; set; }
     @AuraEnabled
     public Decimal volume { get; set; }
@@ -20,6 +22,7 @@ public with sharing class CS_ProductWrapper {
             Decimal price,
             String colors,
             String description,
+            String shortDescription,
             String material,
             Decimal volume) {
         this.id = id;
@@ -27,6 +30,7 @@ public with sharing class CS_ProductWrapper {
         this.price = price;
         this.colors = colors;
         this.description = description;
+        this.shortDescription = shortDescription;
         this.material = material;
         this.volume = volume;
     }

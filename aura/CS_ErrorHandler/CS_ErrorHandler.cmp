@@ -1,0 +1,6 @@
+<aura:component description="CS_ErrorHandler" abstract="true" extensible="true">
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="type" type="String"/>
+        {!v.body}
+</aura:component>

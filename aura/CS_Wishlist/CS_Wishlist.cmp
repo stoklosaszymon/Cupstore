@@ -32,7 +32,7 @@
                     <lightning:icon iconName="custom:custom1" alternativeText="{!$Label.c.Cart}"
                                     title="{!$Label.c.Cart}"
                                     class="slds-m-right_large" size="large"/>
-                        {!$Label.c.Empty_Cart}
+                        {!$Label.c.Empty_Wishlist}
                 </div>
             </aura:if>
         </div>

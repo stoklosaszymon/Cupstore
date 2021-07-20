@@ -1,4 +1,4 @@
-<aura:component description="CS_ProductPage" controller="CS_ProductController"
+<aura:component description="CS_ProductPage" controller="CS_ProductController" extends="c:CS_ErrorHandler"
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
     <aura:handler event="c.CS_SelectProduct" action="{!c.handleSelect}"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
@@ -16,11 +16,9 @@
                     {!v.productDetails.name}
             </p>
             <p class="productDescription">
-                    {!v.productDetails.description}
+                    {!v.productDetails.shortDescription}
             </p>
-            <div>
-                <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
-            </div>
+            <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
             <hr/>
             <p class="productPrice">
                 <lightning:formattedNumber value="{!v.productDetails.price}"
@@ -28,16 +26,6 @@
                 />
             </p>
             <hr/>
-            <p>
-               {!v.productDetails.description}
-            </p>
-            <hr/>
-            <div class="productDetailsContainer">
-                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.colors}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.material}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.volume + ' ml'}"/>
-            </div>
-
             <div class="buttonsContainer">
                 <div class="quantityContainer slds-p-around_small slds-size_2-of-12">
                     <div onclick="{!c.decreaseQuantity}" class="pointer">
@@ -56,6 +44,17 @@
                                   label="{!$Label.c.Add_to_Cart}"
                                   iconName="utility:cart" iconPosition="left" onclick="{!c.onAddToCart}"/>
                 <c:CS_AddToWishlist productId="{!v.recordId}"/>
+            </div>
+            <hr/>
+            <h1 class="header slds-m-bottom_medium">{!$Label.c.Description}</h1>
+            <p class="description">
+                    {!v.productDetails.description}
+            </p>
+            <hr/>
+            <div class="productDetailsContainer">
+                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.colors}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.material}"/>
+                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.volume + ' ml'}"/>
             </div>
             <hr/>
             <c:CS_ProductComment productId="{!v.productDetails.id}"/>

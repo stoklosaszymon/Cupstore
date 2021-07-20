@@ -1,12 +1,13 @@
 public with sharing class CS_ShoppingCartService {
 
-    public static List<ShoppingCart__c> getCartProducts() {
+    public static List<CS_ShoppingCartWrapper> getCartProducts() {
         String userId = UserInfo.getUserId();
-        return [
+        List<ShoppingCart__c> cart = [
                 SELECT Cup__r.Name, Cup__r.Price__c, Quantity__c, Id, Selected__c
                 FROM ShoppingCart__c
                 WHERE User__c = :userId
         ];
+        return parseToWrapper(cart);
     }
 
     public static Decimal getOverallSum() {
@@ -74,5 +75,22 @@ public with sharing class CS_ShoppingCartService {
         cart.Selected__c = !cart.Selected__c;
         update cart;
         return cart.Selected__c;
+    }
+
+    private static List<CS_ShoppingCartWrapper> parseToWrapper(List<ShoppingCart__c> cart) {
+        List<CS_ShoppingCartWrapper> wrapper = new List<CS_ShoppingCartWrapper>();
+        for (ShoppingCart__c product : cart) {
+            wrapper.add(
+                    new CS_ShoppingCartWrapper(
+                            product.Id,
+                            product.Cup__r.Id,
+                            product.Cup__r.Name,
+                            product.Cup__r.Price__c,
+                            (Integer) product.Quantity__c,
+                            product.Selected__c
+                    )
+            );
+        }
+        return wrapper;
     }
 }

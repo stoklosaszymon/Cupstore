@@ -15,7 +15,10 @@
     border-radius: 8px;
 }
 
-.THIS .shoppingCardListItem:hover {
+.THIS .removed {
+    transform: scale(0.001);
+    transform-origin: 0 0;
+    transition: transform 0.2s;
 }
 
 .THIS .pointer {

@@ -1,15 +1,10 @@
 ({
     onInit: function(component, event, helper) {
-        var id = component.get("v.recordId");
-        helper.getProduct(component, id);
-        helper.getOverallRating(component, id);
-    },
-    handleSelect: function(component, event, helper) {
-        var id = event.getParam("productId");
-        helper.getProduct(component, id);
+        helper.getProduct(component);
+        helper.getOverallRating(component);
     },
     onAddToCart: function(component, event, helper) {
-        helper.addToShoppingCart(component);
+        helper.addToShoppingCart(component, helper);
     },
     increaseQuantity: function(component, event, helper) {
        helper.increaseQuantity(component);
