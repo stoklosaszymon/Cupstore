@@ -1,12 +1,14 @@
 .THIS.listContainer {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 80%;
+    margin-left: 20%;
     flex-wrap: wrap;
 }
 
 .THIS .productTile {
     width: 280px;
+    height: 350px;
     cursor: pointer;
 }
 

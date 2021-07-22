@@ -7,7 +7,7 @@ public with sharing class CS_ProductService {
     public static List<Cup__c> searchProduct(String query) {
         query += '%';
         return [
-                SELECT Name, Price__c, Quantity__c
+                SELECT Name, Price__c, Colors__c
                 FROM Cup__c
                 WHERE Name LIKE :query
         ];
@@ -77,5 +77,45 @@ public with sharing class CS_ProductService {
                 cup.Volume__c
         );
         return wrapper;
+    }
+
+    public static void addProduct(
+            String name,
+            String shortDescription,
+            String description,
+            String colors,
+            String material,
+            Integer volume,
+            Decimal price,
+            String[] images) {
+        Cup__c cup = new Cup__c();
+        cup.Name = name;
+        cup.Short_Description__c = shortDescription;
+        cup.Description__c = description;
+        cup.Colors__c = colors;
+        cup.Material__c = material;
+        cup.Volume__c = volume;
+        cup.Price__c = price;
+        insert cup;
+
+        List<Attachment> attachments = new List<Attachment>();
+        for (String image : images) {
+            Attachment attachment = new Attachment();
+            attachment.Body = Blob.valueOf(image);
+            Attachment.ParentId = cup.Id;
+            Attachment.Name = 'file';
+            attachments.add(attachment);
+        }
+        insert attachments;
+
+        Approval.ProcessSubmitRequest req1 =
+                new Approval.ProcessSubmitRequest();
+        req1.setComments('Submitting request for approval.');
+        req1.setObjectId(cup.id);
+        req1.setSubmitterId(cup.OwnerId);
+        // Submit the record to specific process and skip the criteria evaluation
+        req1.setProcessDefinitionNameOrId('New_Cup_Approval');
+        req1.setSkipEntryCriteria(true);
+        Approval.ProcessResult result = Approval.process(req1);
     }
 }

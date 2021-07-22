@@ -18,9 +18,9 @@
             type: 'comm__namedPage',
             attributes: {
                 name: 'Home'
-            }
+            },
         };
-
+        sessionStorage.setItem( 'query', component.get("v.query") );
         var navService = component.find("navService");
         navService.navigate(pageReference);
     }

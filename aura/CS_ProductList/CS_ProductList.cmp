@@ -2,13 +2,25 @@
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:handler event="c.CS_SearchProduct" action="{!c.handleSearch}"/>
+    <aura:handler name="change" value="{!v.priceMin}" action="{!c.filterByPrice}"/>
+    <aura:handler name="change" value="{!v.priceMax}" action="{!c.filterByPrice}"/>
     <aura:registerEvent type="c.CS_SelectProduct" name="selectProduct"/>
     <aura:attribute name="products" type="Cup__c[]"/>
+    <aura:attribute name="filteredProducts" type="Cup__c[]"/>
+    <aura:attribute name="priceMin" type="Decimal" default="0"/>
+    <aura:attribute name="priceMax" type="Decimal" default="0"/>
     <lightning:navigation aura:id="navService"/>
 
+    <div style="border: solid 1px black; width: 300px; height:70%; position: absolute; left: 0px; top: 10%">
+        <div class="slds-m-around_small">
+            <lightning:input value="{!v.priceMin}" label="min"/>
+            <lightning:input value="{!v.priceMax}" label="max"/>
+        </div>
+    </div>
     <div class="listContainer">
-        <aura:iteration items="{!v.products}" var="product" indexVar="index">
-            <div class="productTile  slds-p-around_x-large slds-m-around_medium" data-id="{!product.Id}" onclick="{!c.handleSelect}">
+        <aura:iteration items="{!v.filteredProducts}" var="product" indexVar="index">
+            <div class="productTile slds-m-around_large slds-p-around_x-large" data-id="{!product.Id}"
+                 onclick="{!c.handleSelect}">
                 <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
                     <c:CS_ProductCarouselImage id="{!product.Id}" aura:id="imgCarousel"/>
                 </div>

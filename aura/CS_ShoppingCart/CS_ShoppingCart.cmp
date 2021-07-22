@@ -58,7 +58,7 @@
         </div>
 
         <aura:if isTrue="{!v.shoppingCart.length > 0}">
-            <div class="slds-m-around_medium slds-p-around_medium overallContainer">
+            <div class="slds-m-around_medium slds-p-around_x-large overallContainer">
                 <div class="overallPriceContainer">
                     <br/>
                     <p class="priceContainer">
@@ -69,8 +69,8 @@
                     </span>
                     </p>
                 </div>
-                <div class="paymentButton slds-m-around_large">
-                    <lightning:button type="button" label="Payment and Shipment"/>
+                <div class="paymentButton slds-m-top_x-large">
+                    <lightning:button type="button" label="Payment and Shipment"/>//hardoce
                 </div>
             </div>
         </aura:if>

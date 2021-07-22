@@ -1,0 +1,19 @@
+.THIS {
+}
+
+.THIS #drop_zone {
+        display: flex;
+        align-items:center;
+        justify-content: center;
+        width: 50%;
+        height: 500px;
+        border-radius: 8px;
+        border: solid 1px gray;
+}
+
+.THIS .slds-carousel__content {
+    display: none;
+}
+
+
+

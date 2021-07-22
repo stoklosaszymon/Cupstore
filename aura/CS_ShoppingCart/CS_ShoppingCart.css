@@ -6,7 +6,7 @@
 }
 
 .THIS .shoppingCardListItem {
-    width: 100%;
+    width: 95%;
     border: 1px solid #D3D3D3;
     justify-content: space-between;
     display: flex;
@@ -66,7 +66,7 @@
 }
 
 .THIS .childContainer {
-    width: 50%;
+    width: 65%;
 }
 
 .THIS .paymentButton {
@@ -76,8 +76,8 @@
 }
 
 .THIS .overallContainer {
-    width: 40%;
-    height: 20%;
+    width: 30%;
+    height: 100%;
     border: 1px solid #D3D3D3;
     border-radius: 8px;
     display:flex;

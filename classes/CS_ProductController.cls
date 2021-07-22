@@ -11,7 +11,7 @@ public with sharing class CS_ProductController {
 
     @AuraEnabled
     public static CS_ProductWrapper getProduct(String id) {
-       return CS_ProductService.getProduct(id);
+        return CS_ProductService.getProduct(id);
     }
 
     @AuraEnabled
@@ -26,6 +26,19 @@ public with sharing class CS_ProductController {
 
     @AuraEnabled
     public static Decimal getOverallRating(String productId) {
-       return CS_ProductService.getOverallRating(productId);
+        return CS_ProductService.getOverallRating(productId);
+    }
+
+    @AuraEnabled
+    public static void addProduct(
+            String name,
+            String shortDescription,
+            String description,
+            String colors,
+            String material,
+            Integer volume,
+            Decimal price,
+            String[] images) {
+       CS_ProductService.addProduct(name, shortDescription, description, colors, material, volume, price, images);
     }
 }

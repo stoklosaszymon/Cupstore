@@ -12,7 +12,7 @@
                             scrollDuration="1">
             <aura:iteration items="{!v.attachments}" var="image">
                 <lightning:carouselImage class="carousel"
-                                         src="{!'data:image/jpeg;base64, ' + image}">
+                                         src="{!image}">
                 </lightning:carouselImage>
             </aura:iteration>
         </lightning:carousel>
@@ -23,7 +23,7 @@
                                     scrollDuration="2">
                     <aura:iteration items="{!v.attachments}" var="image">
                         <lightning:carouselImage class="carousel"
-                                                 src="{!'data:image/jpeg;base64, ' + image}">
+                                                 src="{!image}">
                         </lightning:carouselImage>
                     </aura:iteration>
                 </lightning:carousel>
