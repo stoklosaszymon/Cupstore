@@ -2,28 +2,28 @@
     <aura:attribute name="id" type="String"/>
     <aura:handler name="change" value="{!v.autoScroll}" action="{!c.onAutoScrollChange}"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
-    <aura:attribute name="attachments" type="String[]"/>
+    <aura:attribute name="attachments" type="Attachment[]"/>
     <aura:attribute name="autoScroll" type="Boolean" default="false"/>
     <div>
         <aura:if isTrue="{!v.autoScroll}">
-        <lightning:carousel disableAutoRefresh="false"
-                            aura:id = "carousel"
-                            disableAutoScroll="false"
-                            scrollDuration="1">
-            <aura:iteration items="{!v.attachments}" var="image">
-                <lightning:carouselImage class="carousel"
-                                         src="{!image}">
-                </lightning:carouselImage>
-            </aura:iteration>
-        </lightning:carousel>
+            <lightning:carousel disableAutoRefresh="false"
+                                aura:id="carousel"
+                                disableAutoScroll="false"
+                                scrollDuration="1">
+                <aura:iteration items="{!v.attachments}" var="image">
+                    <lightning:carouselImage class="carousel"
+                                             src="{!'/servlet/servlet.FileDownload?file=' + image.Id}">
+                    </lightning:carouselImage>
+                </aura:iteration>
+            </lightning:carousel>
             <aura:set attribute="else">
                 <lightning:carousel disableAutoRefresh="false"
-                                    aura:id = "carousel"
+                                    aura:id="carousel"
                                     disableAutoScroll="true"
                                     scrollDuration="2">
                     <aura:iteration items="{!v.attachments}" var="image">
                         <lightning:carouselImage class="carousel"
-                                                 src="{!image}">
+                                                 src="{!'/servlet/servlet.FileDownload?file=' + image.Id}">
                         </lightning:carouselImage>
                     </aura:iteration>
                 </lightning:carousel>

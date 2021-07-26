@@ -7,16 +7,8 @@
     <aura:registerEvent type="c.CS_SelectProduct" name="selectProduct"/>
     <aura:attribute name="products" type="Cup__c[]"/>
     <aura:attribute name="filteredProducts" type="Cup__c[]"/>
-    <aura:attribute name="priceMin" type="Decimal" default="0"/>
-    <aura:attribute name="priceMax" type="Decimal" default="0"/>
     <lightning:navigation aura:id="navService"/>
 
-    <div style="border: solid 1px black; width: 300px; height:70%; position: absolute; left: 0px; top: 10%">
-        <div class="slds-m-around_small">
-            <lightning:input value="{!v.priceMin}" label="min"/>
-            <lightning:input value="{!v.priceMax}" label="max"/>
-        </div>
-    </div>
     <div class="listContainer">
         <aura:iteration items="{!v.filteredProducts}" var="product" indexVar="index">
             <div class="productTile slds-m-around_large slds-p-around_x-large" data-id="{!product.Id}"

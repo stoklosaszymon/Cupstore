@@ -3,10 +3,11 @@
 
 .THIS #drop_zone {
         display: flex;
+        flex-direction:column;
         align-items:center;
         justify-content: center;
         width: 50%;
-        height: 500px;
+        height: 250px;
         border-radius: 8px;
         border: solid 1px gray;
 }
@@ -15,5 +16,18 @@
     display: none;
 }
 
+.THIS .slds-carousel__autoplay {
+    display: none;
+}
 
+.THIS .listContainer {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
+.THIS .listContainer > slds-carousel__indicators {
+    display: none
+}

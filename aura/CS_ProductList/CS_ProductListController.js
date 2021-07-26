@@ -27,26 +27,4 @@
         var carousel = component.find("imgCarousel")[index];
         carousel.set("v.autoScroll", false);
     },
-    filterByPrice: function(component, event, helper) {
-        let minPrice = component.get("v.priceMin");
-        let maxPrice = component.get("v.priceMax");
-        let list = component.get("v.products");
-
-        if ( minPrice ) {
-             let newList = list.filter( (product) => product.Price__c > minPrice);
-             component.set("v.filteredProducts", newList);
-        }
-
-        if ( minPrice ) {
-             let newList = list.filter( (product) => product.Price__c < maxPrice);
-             component.set("v.filteredProducts", newList);
-        }
-
-        if (minPrice && maxPrice) {
-            let newList = list.filter( (product) => product.Price__c < maxPrice && product.Price__c > minPrice);
-            component.set("v.filteredProducts", newList);
-        } else {
-            component.set("v.filteredProducts", list);
-        }
-    }
 })

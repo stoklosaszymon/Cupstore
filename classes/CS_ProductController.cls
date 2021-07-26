@@ -15,7 +15,7 @@ public with sharing class CS_ProductController {
     }
 
     @AuraEnabled
-    public static List<String> getProductAttachments(String id) {
+    public static List<Attachment> getProductAttachments(String id) {
         return CS_ProductService.getProductAttachments(id);
     }
 
@@ -40,5 +40,10 @@ public with sharing class CS_ProductController {
             Decimal price,
             String[] images) {
        CS_ProductService.addProduct(name, shortDescription, description, colors, material, volume, price, images);
+    }
+
+    @AuraEnabled
+    public static List<Cup__c> getUserProducts() {
+        return CS_ProductService.getUserProducts();
     }
 }

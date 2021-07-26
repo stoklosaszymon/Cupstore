@@ -29,14 +29,14 @@
             <div class="buttonsContainer">
                 <div class="quantityContainer slds-p-around_small slds-size_2-of-12">
                     <div onclick="{!c.decreaseQuantity}" class="pointer">
-                        <lightning:icon iconName="utility:dash" alternativeText="Event" title="Event"
+                        <lightning:icon iconName="utility:dash"
                                         size="x-small" class="pointer"/>
                     </div>
                     <div class="quantity slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
                             {!v.quantity}
                     </div>
                     <div onclick="{!c.increaseQuantity}" class="pointer">
-                        <lightning:icon iconName="utility:add" alternativeText="Event" title="Event"
+                        <lightning:icon iconName="utility:add"
                                         size="x-small" class="pointer"/>
                     </div>
                 </div>

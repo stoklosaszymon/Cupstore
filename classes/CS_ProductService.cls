@@ -5,11 +5,11 @@ public with sharing class CS_ProductService {
     }
 
     public static List<Cup__c> searchProduct(String query) {
-        query += '%';
+        String searchQuery = '%' + query + '%';
         return [
                 SELECT Name, Price__c, Colors__c
                 FROM Cup__c
-                WHERE Name LIKE :query
+                WHERE Name LIKE :searchQuery
         ];
     }
 
@@ -22,19 +22,13 @@ public with sharing class CS_ProductService {
         return parseToWrapper(cup);
     }
 
-    public static List<String> getProductAttachments(String id) {
-        List<String> images = new List<String>();
+    public static List<Attachment> getProductAttachments(String id) {
         List<Attachment> attachments = [
-                SELECT Body
+                SELECT Id
                 FROM Attachment
                 WHERE ParentId = :id
         ];
-        for (Attachment attachment : attachments) {
-            images.add(
-                    attachment.Body.toString()
-            );
-        }
-        return images;
+        return attachments;
     }
 
     public static void addToCart(String productId, Integer quantity) {
@@ -98,24 +92,43 @@ public with sharing class CS_ProductService {
         cup.Price__c = price;
         insert cup;
 
+        insertAttachemnts(images, cup.Id);
+        runApprovalProcess(cup.Id);
+    }
+
+    public static List<Cup__c> getUserProducts() {
+        String userId = UserInfo.getUserId();
+        List<CS_ProductWrapper> wrapper = new List<CS_ProductWrapper>();
+        List<Cup__c> products = [
+                SELECT Name, Price__c
+                FROM Cup__c
+                WHERE OwnerId = :userId
+                AND Approval__c = 'Approved'
+        ];
+        return products;
+    }
+
+    private static void insertAttachemnts(String[] images, String id) {
         List<Attachment> attachments = new List<Attachment>();
         for (String image : images) {
             Attachment attachment = new Attachment();
-            attachment.Body = Blob.valueOf(image);
-            Attachment.ParentId = cup.Id;
+            attachment.Body = EncodingUtil.base64Decode(image);
+            Attachment.ParentId = id;
             Attachment.Name = 'file';
             attachments.add(attachment);
         }
         insert attachments;
+    }
 
+    private static void runApprovalProcess(String objectId) {
         Approval.ProcessSubmitRequest req1 =
                 new Approval.ProcessSubmitRequest();
         req1.setComments('Submitting request for approval.');
-        req1.setObjectId(cup.id);
-        req1.setSubmitterId(cup.OwnerId);
+        req1.setObjectId(objectId);
         // Submit the record to specific process and skip the criteria evaluation
         req1.setProcessDefinitionNameOrId('New_Cup_Approval');
         req1.setSkipEntryCriteria(true);
         Approval.ProcessResult result = Approval.process(req1);
     }
+
 }

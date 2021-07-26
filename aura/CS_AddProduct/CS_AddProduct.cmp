@@ -1,5 +1,8 @@
 <aura:component description="CS_AddProduct" controller="CS_ProductController" extends="c:CS_ErrorHandler"
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:attribute name="loading" type="Boolean" default="false"/>
+    <aura:attribute name="products" type="Cup__c[]"/>
     <aura:attribute name="productName" type="String"/>
     <aura:attribute name="shortDescription" type="String"/>
     <aura:attribute name="description" type="String"/>
@@ -9,35 +12,83 @@
     <aura:attribute name="price" type="Decimal"/>
     <aura:attribute name="images" type="String[]"/>
     <lightning:card>
-        <div class="slds-m-around_large">
-            <lightning:input name="productName" value="{! v.productName }" label="Product name"/>
-            <lightning:input name="shortDescription" value="{! v.shortDescription }" label="Short description"/>
-            <lightning:input name="description" value="{! v.description }" label="Description"/>
-            <lightning:input name="colors" value="{! v.colors }" label="Colors"/>
-            <lightning:input name="material" value="{! v.material }" label="Material"/>
-            <lightning:input name="volume" value="{! v.volume }" label="Volume"/>
-            <lightning:input name="price" value="{! v.price }" formatter="currency" label="Price" step="0.01"/>
-            <h1>Images</h1>
-            <div style="display: flex; flex-direction: row; width:100%; justify-content: center">
-                <div id="drop_zone" class="slds-m-around_large" ondrop="{!c.dropHandler}" ondragover="{!c.dragOverHandler}">
-                    <lightning:icon iconName="utility:upload" alternativeText="Event" title="Event"/>
+        <div style="display: flex; flex-direction:row">
+            <div class="slds-m-around_large" style="width: 40%">
+                <h1 style="font-size: 1.2rem; font-weight: bold">{!$Label.c.Add_Product}</h1>
+                <lightning:input name="productName"
+                                 value="{! v.productName }"
+                                 label="{!$Label.c.Product_Name}"/>
+                <lightning:input name="shortDescription"
+                                 value="{! v.shortDescription }"
+                                 label="{!$Label.c.Description}"
+                                 maxlength="250"/>
+                <lightning:textarea name="input1"
+                                    label="{!$Label.c.Description}"
+                                    value="{! v.description }"/>
+                <lightning:input name="colors"
+                                 value="{! v.colors }"
+                                 label="{!$Label.c.Color}"/>
+                <lightning:input name="material"
+                                 value="{! v.material }"
+                                 label="{!$Label.c.Material}"/>
+                <lightning:input name="volume"
+                                 value="{! v.volume }"
+                                 label="{!$Label.c.Volume}"/>
+                <lightning:input name="price"
+                                 value="{! v.price }"
+                                 formatter="currency"
+                                 label="{!$Label.c.Price}"
+                                 step="0.01"/>
+                <div class="slds-m-around_large" style="display: flex; flex-direction: row; width:100%;">
+                    <div id="drop_zone" class="slds-m-around_large">
+                        <lightning:input name="file1"
+                                         type="file"
+                                         label="{!$Label.c.Images}"
+                                         multiple="true"
+                                         accept="image/png"
+                                         onchange="{! c.handleFilesChange }"/>
+                    </div>
+                    <div style="width: 50%;" class="slds-m-around_large">
+                        <lightning:carousel disableAutoRefresh="false"
+                                            aura:id="carousel"
+                                            disableAutoScroll="false"
+                                            scrollDuration="2">
+                            <aura:iteration items="{!v.images}" var="image">
+                                <lightning:carouselImage class="carousel"
+                                                         src="{!'data:image/png;base64,' + image}">
+                                </lightning:carouselImage>
+                            </aura:iteration>
+                        </lightning:carousel>
+                    </div>
                 </div>
-                <div style="width: 50%; height: 200px" class="slds-m-around_large">
-                    <lightning:carousel disableAutoRefresh="false"
-                                        aura:id="carousel"
-                                        disableAutoScroll="false"
-                                        scrollDuration="2">
-                        <aura:iteration items="{!v.images}" var="image">
-                            <lightning:carouselImage class="carousel"
-                                                     src="{!image}">
-                            </lightning:carouselImage>
-                        </aura:iteration>
-                    </lightning:carousel>
+                <div style="display: flex; width: 100%; justify-content: center">
+                    <lightning:button class="slds-size_3-of-12" variant="brand"
+                                      label="{!$Label.c.Product_Add}"
+                                      iconName="utility:add" iconPosition="left" onclick="{!c.onAddProduct}"/>
                 </div>
             </div>
-                <lightning:button class="slds-size_6-of-12" variant="brand"
-                                  label="Add product"
-                                  iconName="utility:add" iconPosition="left" onclick="{!c.onAddProduct}"/>
+            <div class="listContainer slds-m-around_large">
+                <div style="width: 100%">
+                    <h1 style="font-size: 1.2rem; font-weight: bold">{!$Label.c.Your_Products}</h1>
+                </div>
+                <aura:iteration items="{!v.products}" var="product">
+                    <div style="width: 150px; height: 300px; text-align: center" class="slds-m-around_medium">
+                        <c:CS_ProductCarouselImage id="{!product.Id}"/>
+                        <p style="font-weight: bold">
+                                {!product.Name}
+                        </p>
+                        <p>
+                            <lightning:formattedNumber value="{!product.Price__c}"
+                                                       style="currency"/>
+                        </p>
+                    </div>
+                </aura:iteration>
+            </div>
+        </div>
+        <div class="exampleHolder">
+            <aura:if isTrue="{! v.loading }">
+                <lightning:spinner alternativeText="Loading"/>
+            </aura:if>
         </div>
     </lightning:card>
 </aura:component>

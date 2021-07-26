@@ -1,9 +1,10 @@
 ({
     handleSearch: function(component) {
+        let query = sessionStorage.getItem( 'query' );
         var action = component.get("c.searchProduct");
-        action.setParams(
-            { "query": component.get("v.query")}
-        );
+        action.setParams({
+             "query": query
+         });
         action.setCallback(this, function(response) {
             var event = $A.get("e.c:CS_SearchProduct");
             event.setParams({
