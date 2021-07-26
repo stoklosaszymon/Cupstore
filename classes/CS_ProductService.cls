@@ -121,11 +121,9 @@ public with sharing class CS_ProductService {
     }
 
     private static void runApprovalProcess(String objectId) {
-        Approval.ProcessSubmitRequest req1 =
-                new Approval.ProcessSubmitRequest();
+        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
         req1.setComments('Submitting request for approval.');
         req1.setObjectId(objectId);
-        // Submit the record to specific process and skip the criteria evaluation
         req1.setProcessDefinitionNameOrId('New_Cup_Approval');
         req1.setSkipEntryCriteria(true);
         Approval.ProcessResult result = Approval.process(req1);

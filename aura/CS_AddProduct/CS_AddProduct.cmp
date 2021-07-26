@@ -85,7 +85,7 @@
                 </aura:iteration>
             </div>
         </div>
-        <div class="exampleHolder">
+        <div>
             <aura:if isTrue="{! v.loading }">
                 <lightning:spinner alternativeText="Loading"/>
             </aura:if>
