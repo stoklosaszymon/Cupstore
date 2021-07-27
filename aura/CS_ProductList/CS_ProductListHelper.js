@@ -24,14 +24,11 @@
        var action = component.get("c.getProducts");
        action.setCallback(this, function(response) {
            component.set("v.products", response.getReturnValue());
-           component.set("v.filteredProducts", response.getReturnValue());
-           console.log(response.getReturnValue());
        });
        $A.enqueueAction(action);
     },
 
     getSearchResults: function(component, event) {
         component.set("v.products", event.getParam("productList"));
-        component.set("v.filteredProducts", event.getParam("productList"));
     }
 })

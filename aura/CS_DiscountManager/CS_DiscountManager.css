@@ -1,0 +1,21 @@
+.THIS {
+}
+
+.THIS .dateInputContainer {
+    width: 40%;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+
+.THIS .dateContainerLabel {
+    font-weight: bold;
+}
+
+.THIS .inputsContainer {
+
+}
+
+.THIS .slds-carousel__indicators {
+    display: none
+}

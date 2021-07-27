@@ -17,6 +17,19 @@
     color: red;
 }
 
+.THIS .crossedOutPrice {
+    text-decoration: line-through;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: gray;
+}
+
+
+.THIS .priceContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 .THIS .productDetailsContainer {
     display: flex;
     flex-direction: column;

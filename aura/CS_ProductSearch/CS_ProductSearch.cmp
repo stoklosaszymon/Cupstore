@@ -1,8 +1,8 @@
 <aura:component description="CS_ProductSearch" controller="CS_ProductController"
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable">
-    <aura:registerEvent name="searchProduct" type="c.CS_SearchProduct"/>
-    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="query" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:registerEvent name="searchProduct" type="c.CS_SearchProduct"/>
     <lightning:navigation aura:id="navService"/>
     <div onkeyup="{! c.handleKeyUp }" class="slds-size_11-of-12 slds-m-bottom_small">
         <lightning:input

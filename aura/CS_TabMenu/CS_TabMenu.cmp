@@ -1,0 +1,12 @@
+<aura:component description="CS_TabMenu" implements="flexipage:availableForAllPageTypes">
+    <lightning:card>
+        <lightning:tabset>
+            <lightning:tab label="Add New Product">
+                <c:CS_AddProduct/>
+            </lightning:tab>
+            <lightning:tab label="Discount Manager">
+                <c:CS_DiscountManager/>
+            </lightning:tab>
+        </lightning:tabset>
+    </lightning:card>
+</aura:component>

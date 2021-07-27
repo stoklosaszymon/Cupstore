@@ -20,11 +20,27 @@
             </p>
             <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
             <hr/>
-            <p class="productPrice">
-                <lightning:formattedNumber value="{!v.productDetails.price}"
-                                           style="currency"
-                />
-            </p>
+            <aura:if isTrue="{!v.productDetails.afterDiscountPrice == v.productDetails.price}">
+                <p class="productPrice">
+                    <lightning:formattedNumber value="{!v.productDetails.price}"
+                                               style="currency"
+                    />
+                </p>
+                <aura:set attribute="else">
+                    <div class="priceContainer">
+                        <p class="crossedOutPrice slds-m-right_large">
+                            <lightning:formattedNumber value="{!v.productDetails.price}"
+                                                       style="currency"
+                            />
+                        </p>
+                        <p class="productPrice">
+                            <lightning:formattedNumber value="{!v.productDetails.afterDiscountPrice}"
+                                                       style="currency"
+                            />
+                        </p>
+                    </div>
+                </aura:set>
+            </aura:if>
             <hr/>
             <div class="buttonsContainer">
                 <div class="quantityContainer slds-p-around_small slds-size_2-of-12">

@@ -13,7 +13,7 @@
                                          onchange="{!c.onSelect}"/>
                         <c:CS_ProductCarouselImage id="{!product.productId}" aura:id="imgCarousel"/>
                     </div>
-                    <div style="min-width: 130px" class="slds-m-around_small">
+                    <div style="max-width: 150px" class="slds-m-around_small">
                         <p style="font-size: 1.3rem; font-weight: bold: width: 100%">
                                 {!product.name}
                         </p>
@@ -70,7 +70,7 @@
                     </p>
                 </div>
                 <div class="paymentButton slds-m-top_x-large">
-                    <lightning:button type="button" label="Payment and Shipment"/>//hardoce
+                    <lightning:button type="button" label="Payment and Shipment"/>
                 </div>
             </div>
         </aura:if>

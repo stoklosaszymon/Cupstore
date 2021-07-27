@@ -1,0 +1,66 @@
+.THIS {
+}
+
+.THIS .dateInputContainer {
+    width: 40%;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+
+.THIS .dateContainerLabel {
+    font-weight: bold;
+}
+
+.THIS .inputsContainer {
+    width: 80%;
+}
+
+.THIS .discountValueContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.THIS .discountNameContainer {
+
+}
+
+.THIS .inputLabel {
+    width: 40%;
+}
+
+
+.THIS .listContainer {
+   width: 35%;
+   max-height: 250px;
+   overflow-y: scroll;
+   border: 1px solid gray;
+}
+
+.THIS .productListElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.THIS .productListElement:hover {
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+
+
+.THIS .icon {
+    cursor: pointer;
+}
+
+.THIS.lists {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+

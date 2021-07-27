@@ -7,7 +7,7 @@ public with sharing class CS_ProductService {
     public static List<Cup__c> searchProduct(String query) {
         String searchQuery = '%' + query + '%';
         return [
-                SELECT Name, Price__c, Colors__c
+                SELECT Name, Price__c, After_Discount_Price__c
                 FROM Cup__c
                 WHERE Name LIKE :searchQuery
         ];
@@ -15,7 +15,15 @@ public with sharing class CS_ProductService {
 
     public static CS_ProductWrapper getProduct(String id) {
         Cup__c cup = [
-                SELECT Name, Price__c, Quantity__c, Colors__c, Description__c, Material__c, Volume__c, Short_Description__c
+                SELECT  Name,
+                        Price__c,
+                        Quantity__c,
+                        Colors__c,
+                        Description__c,
+                        Material__c,
+                        Volume__c,
+                        Short_Description__c,
+                        After_Discount_Price__c
                 FROM Cup__c
                 WHERE Id = :id
         ];
@@ -64,6 +72,7 @@ public with sharing class CS_ProductService {
                 cup.Id,
                 cup.Name,
                 cup.Price__c,
+                cup.After_Discount_Price__c,
                 cup.Colors__c,
                 cup.Description__c,
                 cup.Short_Description__c,
@@ -92,7 +101,7 @@ public with sharing class CS_ProductService {
         cup.Price__c = price;
         insert cup;
 
-        insertAttachemnts(images, cup.Id);
+        insertAttachments(images, cup.Id);
         runApprovalProcess(cup.Id);
     }
 
@@ -108,7 +117,7 @@ public with sharing class CS_ProductService {
         return products;
     }
 
-    private static void insertAttachemnts(String[] images, String id) {
+    private static void insertAttachments(String[] images, String id) {
         List<Attachment> attachments = new List<Attachment>();
         for (String image : images) {
             Attachment attachment = new Attachment();
@@ -128,5 +137,5 @@ public with sharing class CS_ProductService {
         req1.setSkipEntryCriteria(true);
         Approval.ProcessResult result = Approval.process(req1);
     }
-
+//custom label
 }

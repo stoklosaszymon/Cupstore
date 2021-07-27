@@ -2,15 +2,12 @@
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:handler event="c.CS_SearchProduct" action="{!c.handleSearch}"/>
-    <aura:handler name="change" value="{!v.priceMin}" action="{!c.filterByPrice}"/>
-    <aura:handler name="change" value="{!v.priceMax}" action="{!c.filterByPrice}"/>
     <aura:registerEvent type="c.CS_SelectProduct" name="selectProduct"/>
     <aura:attribute name="products" type="Cup__c[]"/>
-    <aura:attribute name="filteredProducts" type="Cup__c[]"/>
     <lightning:navigation aura:id="navService"/>
 
     <div class="listContainer">
-        <aura:iteration items="{!v.filteredProducts}" var="product" indexVar="index">
+        <aura:iteration items="{!v.products}" var="product" indexVar="index">
             <div class="productTile slds-m-around_large slds-p-around_x-large" data-id="{!product.Id}"
                  onclick="{!c.handleSelect}">
                 <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
