@@ -1,7 +1,6 @@
 ({
     onInit: function(component, event, helper) {
        helper.getCartProducts(component);
-       helper.getOverallSum(component);
     },
     onRemove: function(component, event, helper) {
         helper.setRemovedClass(component, event);
@@ -15,5 +14,8 @@
     },
     onSelect: function(component, event, helper) {
         helper.selectProduct(component, event);
+    },
+    onGoToOrder: function(component, event, helper) {
+        helper.goToOrder(component);
     }
 })

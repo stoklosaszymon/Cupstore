@@ -4,7 +4,7 @@ public with sharing class CS_WishlistService {
         String userId = UserInfo.getUserId();
         Wishlist__c wishlist = new Wishlist__c();
         wishlist.User__c = userId;
-        wishlist.Cup__c = productId;
+        wishlist.Product__c = productId;
         insert wishlist;
     }
 
@@ -13,7 +13,7 @@ public with sharing class CS_WishlistService {
         List<Wishlist__c> wishlist = [
                 SELECT Id
                 FROM Wishlist__c
-                WHERE Cup__c = :productId
+                WHERE Product__c = :productId
                 AND User__c = :userId
         ];
 
@@ -23,14 +23,25 @@ public with sharing class CS_WishlistService {
         return false;
     }
 
-    public static List<Wishlist__c> getWishlist() {
+    public static List<CS_ProductListWrapper> getWishlist() {
+
         String userId = UserInfo.getUserId();
         List<Wishlist__c> wishlist = [
-                SELECT Id, Cup__r.Name, Cup__R.Price__c, Cup__r.Description__c
+                SELECT Product__r.Name, Product__r.Id
                 FROM Wishlist__c
                 WHERE User__c = :userId
         ];
-        return wishlist;
+
+        List<CS_ProductListWrapper> wrapperList = new List<CS_ProductListWrapper>();
+        for (Wishlist__c wishlistElement: wishlist) {
+            CS_ProductListWrapper wrapper = new CS_ProductListWrapper(
+                    wishlistElement.Product__r.Id,
+                    wishlistElement.Product__r.Name,
+                    CS_ProductService.getProductPrice(wishlistElement.Product__r.Id)
+            );
+            wrapperList.add(wrapper);
+        }
+        return wrapperList;
     }
 
     public static void removeFromWishlist(String id) {
@@ -39,7 +50,7 @@ public with sharing class CS_WishlistService {
                 SELECT Id
                 FROM Wishlist__c
                 WHERE User__c = :userId
-                AND (Id = :id OR Cup__c =: id)
+                AND (Id = :id OR Product__c = :id)
         ];
         delete wishlist;
     }

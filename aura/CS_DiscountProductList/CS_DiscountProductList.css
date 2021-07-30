@@ -2,8 +2,27 @@
 }
 
 .THIS .listContainer {
-   width: 35%;
-   max-height: 250px;
-   overflow-y: scroll;
-   border: 1px solid gray;
+   width: 60%;
+   max-height: 280px;
+   overflow-y: auto;
+}
+
+
+.THIS .productListElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+}
+
+.THIS .productListElement > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.THIS .productName {
+    justify-content: start;
 }

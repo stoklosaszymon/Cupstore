@@ -2,6 +2,7 @@
     onInit: function(component, event, helper) {
         helper.getProduct(component);
         helper.getOverallRating(component);
+        helper.getProductPrice(component);
     },
 
     onAddToCart: function(component, event, helper) {

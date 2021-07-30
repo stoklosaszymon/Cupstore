@@ -34,16 +34,16 @@
     addReview: function(component) {
         let action = component.get("c.addReview");
         action.setParams({
-            "text": component.get("v.body"),
+            "text": component.get("v.textBody"),
             "rating": component.get("v.rating"),
             "productId": component.get("v.productId"),
         });
         action.setCallback(this, function(response){
             let state = response.getState();
             if (state == 'SUCCESS') {
+                component.set('v.textBody', '');
+                component.set('v.rating', 0);
                 this.getReviews(component);
-                component.set("v.rating", 0);
-                component.set("v.body", '');
                 this.handleMessage($A.get("$Label.c.Success"), $A.get("$Label.c.Review_Added"), 'success');
             } else {
                 this.handleMessage($A.get("$Label.c.Error"), $A.get("$Label.c.Error_Add_Review"), 'error');
@@ -65,5 +65,30 @@
     },
     setRating: function(component) {
         component.set("v.rating", event.getParam("rating"));
+    },
+
+    createRatingComponent: function(component) {
+        $A.createComponent(
+           "c:CS_StarRating",
+           {
+               "value": "0"
+           },
+           function(newButton, status, errorMessage){
+               //Add the new button to the body array
+               if (status === "SUCCESS") {
+                   var body = component.get("v.body");
+                   body.push(newButton);
+                   component.set("v.body", body);
+               }
+               else if (status === "INCOMPLETE") {
+                   console.log("No response from server or client is offline.")
+                   // Show offline error
+               }
+               else if (status === "ERROR") {
+                   console.log("Error: " + errorMessage);
+                   // Show error message
+               }
+           }
+       );
     }
 })

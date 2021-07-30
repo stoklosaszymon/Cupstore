@@ -4,11 +4,7 @@
         component.set("v.loading", true);
         action.setParams({
             "name": component.get("v.productName"),
-            "shortDescription": component.get("v.shortDescription"),
             "description": component.get("v.description"),
-            "colors": component.get("v.colors"),
-            "material": component.get("v.material"),
-            "volume": component.get("v.volume"),
             "price": component.get("v.price"),
             "images": component.get("v.images")
         });

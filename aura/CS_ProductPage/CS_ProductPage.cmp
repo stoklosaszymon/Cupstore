@@ -7,6 +7,7 @@
     <aura:attribute name="overallRating" type="Integer"/>
     <aura:attribute name="isInWishlist" type="Boolean" default="false"/>
     <aura:attribute name="quantity" type="Integer" default="1"/>
+    <aura:attribute name="discountValue" type="Decimal"/>
     <div class="pageContainer slds-m-top_medium">
         <div class="slds-size_6-of-12">
             <c:CS_ProductCarouselImage id="{!v.recordId}"/>
@@ -20,23 +21,20 @@
             </p>
             <c:CS_StarRating value="{!v.overallRating}" readonly="true"/>
             <hr/>
-            <aura:if isTrue="{!v.productDetails.afterDiscountPrice == v.productDetails.price}">
+            <aura:if isTrue="{!v.discountValue == v.productDetails.price}">
                 <p class="productPrice">
                     <lightning:formattedNumber value="{!v.productDetails.price}"
-                                               style="currency"
-                    />
+                                               style="currency"/>
                 </p>
                 <aura:set attribute="else">
-                    <div class="priceContainer">
-                        <p class="crossedOutPrice slds-m-right_large">
+                    <div style="display: flex; flex-direction: row">
+                        <p class="productPrice crossedOutPrice slds-m-right_medium">
                             <lightning:formattedNumber value="{!v.productDetails.price}"
-                                                       style="currency"
-                            />
+                                                       style="currency"/>
                         </p>
                         <p class="productPrice">
-                            <lightning:formattedNumber value="{!v.productDetails.afterDiscountPrice}"
-                                                       style="currency"
-                            />
+                            <lightning:formattedNumber value="{!v.discountValue}"
+                                                       style="currency"/>
                         </p>
                     </div>
                 </aura:set>
@@ -66,12 +64,6 @@
             <p class="description">
                     {!v.productDetails.description}
             </p>
-            <hr/>
-            <div class="productDetailsContainer">
-                <c:CS_ProductInfo label="{!$Label.c.Color}" value="{!v.productDetails.colors}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Material}" value="{!v.productDetails.material}"/>
-                <c:CS_ProductInfo label="{!$Label.c.Volume}" value="{!v.productDetails.volume + ' ml'}"/>
-            </div>
             <hr/>
             <c:CS_ProductComment productId="{!v.productDetails.id}"/>
         </div>

@@ -2,13 +2,9 @@
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes">
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="loading" type="Boolean" default="false"/>
-    <aura:attribute name="products" type="Cup__c[]"/>
+    <aura:attribute name="products" type="Product2[]"/>
     <aura:attribute name="productName" type="String"/>
-    <aura:attribute name="shortDescription" type="String"/>
     <aura:attribute name="description" type="String"/>
-    <aura:attribute name="colors" type="String"/>
-    <aura:attribute name="material" type="String"/>
-    <aura:attribute name="volume" type="String"/>
     <aura:attribute name="price" type="Decimal"/>
     <aura:attribute name="images" type="String[]"/>
     <lightning:card>
@@ -18,22 +14,9 @@
                 <lightning:input name="productName"
                                  value="{! v.productName }"
                                  label="{!$Label.c.Product_Name}"/>
-                <lightning:input name="shortDescription"
-                                 value="{! v.shortDescription }"
-                                 label="{!$Label.c.Description}"
-                                 maxlength="250"/>
                 <lightning:textarea name="input1"
                                     label="{!$Label.c.Description}"
                                     value="{! v.description }"/>
-                <lightning:input name="colors"
-                                 value="{! v.colors }"
-                                 label="{!$Label.c.Color}"/>
-                <lightning:input name="material"
-                                 value="{! v.material }"
-                                 label="{!$Label.c.Material}"/>
-                <lightning:input name="volume"
-                                 value="{! v.volume }"
-                                 label="{!$Label.c.Volume}"/>
                 <lightning:input name="price"
                                  value="{! v.price }"
                                  formatter="currency"

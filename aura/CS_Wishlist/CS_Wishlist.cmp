@@ -1,26 +1,26 @@
 <aura:component description="CS_Wishlist" controller="CS_WishlistController"
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes">
-    <aura:attribute name="wishlist" type="Wishlist__c[]"/>
+    <aura:attribute name="wishlist" type="CS_ProductListWrapper[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <lightning:navigation aura:id="navService"/>
     <div class="container">
         <div class="childContainer">
             <aura:iteration items="{!v.wishlist}" var="product">
                 <div class="slds-m-around_medium shoppingCardListItem">
-                    <div class="subContainer" data-id="{!product.Cup__r.Id}" onclick="{!c.onRedirect}">
+                    <div class="subContainer" data-id="{!product.id}" onclick="{!c.onRedirect}">
                         <div class="imgContainer slds-m-around_medium slds-align_absolute-center">
-                            <c:CS_ProductCarouselImage id="{!product.Cup__r.Id}" aura:id="imgCarousel"/>
+                            <c:CS_ProductCarouselImage id="{!product.id}" aura:id="imgCarousel"/>
                         </div>
                         <p style="font-size: 1.3rem; font-weight: bold">
-                                {!product.Cup__r.Name}
+                                {!product.name}
                         </p>
                         <p style="font-size: 1.2rem" class="slds-m-right_medium">
-                            <lightning:formattedNumber value="{!product.Cup__r.Price__c}"
+                            <lightning:formattedNumber value="{!product.price}"
                                                        style="currency"
                             />
                         </p>
                     </div>
-                    <p onclick="{!c.onRemove}" data-id="{!product.Id}" class="slds-m-around_small">
+                    <p onclick="{!c.onRemove}" data-id="{!product.id}" class="slds-m-around_small">
                         <lightning:icon iconName="utility:clear" alternativeText="{!$Label.c.Remove_from_Wishlist}"
                                         title="{!$Label.c.Remove_from_Wishlist}"
                                         size="medium" class="pointer"/>

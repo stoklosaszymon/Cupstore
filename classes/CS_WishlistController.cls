@@ -12,7 +12,7 @@ public with sharing class CS_WishlistController {
     }
 
     @AuraEnabled
-    public static List<Wishlist__c> getWishlist() {
+    public static List<CS_ProductListWrapper> getWishlist() {
         return CS_WishlistService.getWishlist();
     }
 

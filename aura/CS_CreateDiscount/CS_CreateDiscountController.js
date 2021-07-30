@@ -9,5 +9,9 @@
 
     onTypeChange: function(component, event, helper) {
        helper.changeType(component);
+    },
+
+    onRemove: function(component, event, helper) {
+        helper.removeFromList(component, event);
     }
 })

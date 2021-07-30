@@ -21,21 +21,11 @@ public with sharing class CS_ProductWrapper {
     public CS_ProductWrapper(
             String id,
             String name,
-            Decimal price,
-            Decimal afterDiscountPrice,
-            String colors,
             String description,
-            String shortDescription,
-            String material,
-            Decimal volume) {
+            Decimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.afterDiscountPrice = afterDiscountPrice;
-        this.colors = colors;
         this.description = description;
-        this.shortDescription = shortDescription;
-        this.material = material;
-        this.volume = volume;
     }
 }

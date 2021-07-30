@@ -11,7 +11,7 @@
             type: 'standard__recordPage',
             attributes: {
                 recordId: id,
-                objectApiName: 'Cup__c',
+                objectApiName: 'Product2',
                 actionName: 'view'
             }
         };

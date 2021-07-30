@@ -1,7 +1,7 @@
 <aura:component description="CS_ProductComment" controller="CS_ReviewController" extends="c:CS_ErrorHandler">
     <aura:handler name="change" value="{!v.productId}" action="{!c.onChange}"/>
     <aura:attribute name="productId" type="String"/>
-    <aura:attribute name="body" type="String"/>
+    <aura:attribute name="textBody" type="String"/>
     <aura:attribute name="reviews" type="CS_ReviewWrapper[]"/>
     <aura:attribute name="maxPageSize" type="Integer"/>
     <aura:attribute name="page" type="Integer" default="1"/>
@@ -10,8 +10,12 @@
     <div class="slds-m-around_large">
         <div>
             <h1 class="header">{!$Label.c.Reviews}</h1>
-            <c:CS_StarRating value="{!v.rating}"/>
-            <lightning:textarea value="{!v.body}"/>
+            <div aura:id="rating">
+                <c:CS_StarRating value="{!v.rating}"/>
+                {!v.body}
+            </div>
+
+            <lightning:textarea value="{!v.textBody}"/>
             <lightning:button label="{!$Label.c.Add_review}" onclick="{!c.onAddReview}"/>
         </div>
         <div class="slds-m-top_medium reviewsContainer">

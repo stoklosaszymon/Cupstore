@@ -1,0 +1,87 @@
+<aura:component description="CS_Order" controller="CS_ShoppingCartController" extends="c:CS_ErrorHandler"
+                implements="forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="firstName" type="String"/>
+    <aura:attribute name="lastName" type="String"/>
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="city" type="String"/>
+    <aura:attribute name="country" type="String"/>
+    <aura:attribute name="street" type="String"/>
+    <aura:attribute name="phone" type="String"/>
+    <aura:attribute name="postalCode" type="String"/>
+    <aura:attribute name="shoppingCart" type="CS_ShoppingCartWrapper[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <div style="display: flex; flex-direction: row; justify-content: space-around; ">
+        <div style="width: 40%; display: flex; flex-direction: column; justify-content: center">
+            <div class="slds-m-around_small" style="display: flex; flex-direction: row width: 100%; justify-content:center">
+
+                <div style="width:50%" class="slds-m-right_small">
+                    <lightning:input name="firstName"
+                                     value="{! v.firstName }"
+                                     label="First Name"/>
+                </div>
+                <div style="width: 50%" class="slds-m-left_small">
+                    <lightning:input name="lastName"
+                                     value="{! v.lastName }"
+                                     label="Last Name"/>
+                </div>
+            </div>
+            <lightning:input name="country"
+                             class="slds-m-around_small"
+                             value="{! v.country }"
+                             label="Country"/>
+            <lightning:input name="street"
+                             class="slds-m-around_small"
+                             value="{! v.street }"
+                             label="Street"/>
+            <lightning:input name="Postal Code"
+                             class="slds-m-around_small"
+                             value="{! v.postalCode }"
+                             label="Postal Code"/>
+            <lightning:input name="city"
+                             class="slds-m-around_small"
+                             value="{! v.city }"
+                             label="City"/>
+            <lightning:input name="phone"
+                             class="slds-m-around_small"
+                             value="{! v.phone }"
+                             label="Phone"/>
+            <lightning:input name="email"
+                             class="slds-m-around_small"
+                             value="{! v.email }"
+                             label="Email"/>
+
+        </div>
+        <div class="slds-m-around_medium slds-p-around_large"
+             style="border: 1px solid gray; border-radius: 8px; width: 40%; align-items: end">
+            <h1 style="font-size: 1.4rem; font-weight: bold">Your Order</h1>
+            <div class="slds-m-around_small header">
+                <p>Product</p>
+                <p>Price</p>
+            </div>
+            <hr/>
+            <aura:iteration items="{!v.shoppingCart}" var="product" indexVar="index">
+                <div class="slds-m-around_small header">
+                    <p>
+                    {!product.name}  x{!product.quantity}
+                    </p>
+                    <p>
+                        <lightning:formattedNumber value="{!product.price * product.quantity}"
+                                                   style="currency"/>
+                    </p>
+                </div>
+            </aura:iteration>
+            <hr/>
+            <div class="slds-m-around_small header">
+                <p>Overall</p>
+                <p>123</p>
+            </div>
+            <div style="width: 100%; display: flex; justify-content:center;">
+                <lightning:button type="button"
+                                  class="slds-m-around_medium"
+                                  label="Create Order"
+                                  onclick="{!c.onCreateOrder}"/>
+            </div>
+        </div>
+
+    </div>
+</aura:component>

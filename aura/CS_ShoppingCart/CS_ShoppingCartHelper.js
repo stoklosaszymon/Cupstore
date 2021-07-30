@@ -1,17 +1,10 @@
 ({
     getOverallSum: function(component) {
-       var action = component.get("c.getOverallSum");
-       action.setCallback(this, function(response) {
-          let state = response.getState();
-          if (state == 'SUCCESS') {
-               if (response.getReturnValue() != null) {
-                   component.set("v.overallSum", response.getReturnValue());
-               } else {
-                   component.set("v.overallSum", 0);
-               }
-          }
-       });
-       $A.enqueueAction(action);
+       let products = component.get("v.shoppingCart");
+       let prices = products.map( product => product.price * product.quantity );
+       let overallSum = prices.reduce( (acc, price) => acc + price);
+       console.log(overallSum)
+       component.set("v.overallSum", overallSum);
     },
 
     getCartProducts: function(component) {
@@ -19,7 +12,9 @@
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state == 'SUCCESS') {
+                console.log(response.getReturnValue())
                 component.set("v.shoppingCart", response.getReturnValue());
+                this.getOverallSum(component);
             }
         });
         $A.enqueueAction(action);
@@ -109,5 +104,18 @@
         } else {
             $A.util.addClass(target, 'removed');
         }
-    }
+    },
+
+    goToOrder: function(component) {
+        var pageReference = {
+            type: 'comm__namedPage',
+            attributes: {
+                name: 'Order__c'
+            }
+        };
+
+        var navService = component.find("navService");
+        navService.navigate(pageReference);
+    },
+
 })

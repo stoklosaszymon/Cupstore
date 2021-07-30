@@ -1,33 +1,38 @@
 public with sharing class CS_ProductService {
 
-    public static List<Cup__c> getProducts() {
-        return [SELECT Name, Price__c, Quantity__c FROM Cup__c];
+    public static List<PricebookEntry> getProducts() {
+        return [SELECT Product2.Id, Product2.Name, UnitPrice FROM PricebookEntry];
     }
 
-    public static List<Cup__c> searchProduct(String query) {
+    public static List<CS_ProductListWrapper> searchProduct(String query) {
         String searchQuery = '%' + query + '%';
-        return [
-                SELECT Name, Price__c, After_Discount_Price__c
-                FROM Cup__c
+        List<Product2> products = [
+                SELECT Name, Id
+                FROM Product2
                 WHERE Name LIKE :searchQuery
+                AND IsActive = true
         ];
+        List<CS_ProductListWrapper> wrapperList = new List<CS_ProductListWrapper>();
+        for (Product2 product: products) {
+            CS_ProductListWrapper wrapper = new CS_ProductListWrapper(
+                    product.Id,
+                    product.Name,
+                    CS_ProductService.getProductPrice(product.Id)
+            );
+            wrapperList.add(wrapper);
+        }
+        return wrapperList;
     }
 
     public static CS_ProductWrapper getProduct(String id) {
-        Cup__c cup = [
-                SELECT  Name,
-                        Price__c,
-                        Quantity__c,
-                        Colors__c,
-                        Description__c,
-                        Material__c,
-                        Volume__c,
-                        Short_Description__c,
-                        After_Discount_Price__c
-                FROM Cup__c
-                WHERE Id = :id
+        PricebookEntry product = [
+                SELECT Product2.Name,
+                        Product2.Description,
+                        UnitPrice
+                FROM PricebookEntry
+                WHERE Product2.Id = :id
         ];
-        return parseToWrapper(cup);
+        return parseToWrapper(product);
     }
 
     public static List<Attachment> getProductAttachments(String id) {
@@ -39,12 +44,55 @@ public with sharing class CS_ProductService {
         return attachments;
     }
 
+    private static ProductDiscount__c getDiscounts(String productId) {
+        List<ProductDiscount__c> discounts = [
+                SELECT Discount__c
+                FROM ProductDiscount__c
+                WHERE Product__c = :productId
+        ];
+        if (discounts.size() > 0) {
+            return discounts[0];
+        }
+        return null;
+    }
+
+    public static Decimal getProductPrice(String id) {
+        PricebookEntry pricebookEntry = [
+                SELECT UnitPrice
+                FROM PricebookEntry
+                WHERE Product2Id = :id
+        ];
+
+        ProductDiscount__c productDiscount = getDiscounts(id);
+
+        if (productDiscount != null) {
+            Discount__c discount = [
+                    SELECT Start_Date__c, End_Date__c, Discount_Type__c, Discount_Value__c
+                    FROM Discount__c
+                    WHERE Id = :productDiscount.Discount__c
+            ];
+
+            if (DateTime.now() < discount.End_Date__c && DateTime.now() > discount.Start_Date__c) {
+                if (discount.Discount_Type__c == 'Percent') {
+                    return pricebookEntry.UnitPrice - (pricebookEntry.UnitPrice * discount.Discount_Value__c / 100);
+                } else {
+                    return pricebookEntry.UnitPrice - discount.Discount_Value__c;
+                }
+            }
+        }
+        return pricebookEntry.UnitPrice;
+    }
+
     public static void addToCart(String productId, Integer quantity) {
         ShoppingCart__c shoppingCart = new ShoppingCart__c();
-        shoppingCart.Cup__c = productId;
+
+        PricebookEntry pricebookEntry = [SELECT UnitPrice FROM PricebookEntry WHERE Product2.Id = :productId];
+
         shoppingCart.User__c = UserInfo.getUserId();
+        shoppingCart.Product__c = productId;
         shoppingCart.Quantity__c = quantity;
         shoppingCart.Selected__c = true;
+        shoppingCart.Price__c = pricebookEntry.UnitPrice;
         insert shoppingCart;
     }
 
@@ -52,67 +100,71 @@ public with sharing class CS_ProductService {
         AggregateResult reviews = [
                 SELECT AVG(Rating__c) rating
                 FROM ProductReview__c
-                WHERE Cup__c = :productId
+                WHERE Product__c = :productId
         ];
         return (Decimal) reviews.get('rating');
     }
 
-    private static List<CS_ProductWrapper> parseToWrapperList(List<Cup__c> cups) {
+    private static List<CS_ProductWrapper> parseToWrapperList(List<PricebookEntry> products) {
         List<CS_ProductWrapper> wrapper = new List<CS_ProductWrapper>();
-        for (Cup__c cup : cups) {
+        for (PricebookEntry product : products) {
             wrapper.add(
-                    parseToWrapper(cup)
+                    parseToWrapper(product)
             );
         }
         return wrapper;
     }
 
-    private static CS_ProductWrapper parseToWrapper(Cup__c cup) {
+    private static CS_ProductWrapper parseToWrapper(PricebookEntry product) {
         CS_ProductWrapper wrapper = new CS_ProductWrapper(
-                cup.Id,
-                cup.Name,
-                cup.Price__c,
-                cup.After_Discount_Price__c,
-                cup.Colors__c,
-                cup.Description__c,
-                cup.Short_Description__c,
-                cup.Material__c,
-                cup.Volume__c
+                product.Product2.Id,
+                product.Product2.Name,
+                product.Product2.Description,
+                product.UnitPrice
         );
         return wrapper;
     }
 
     public static void addProduct(
             String name,
-            String shortDescription,
             String description,
-            String colors,
-            String material,
-            Integer volume,
             Decimal price,
             String[] images) {
-        Cup__c cup = new Cup__c();
-        cup.Name = name;
-        cup.Short_Description__c = shortDescription;
-        cup.Description__c = description;
-        cup.Colors__c = colors;
-        cup.Material__c = material;
-        cup.Volume__c = volume;
-        cup.Price__c = price;
-        insert cup;
+        Product2 product = new Product2();
+        product.Name = name;
+        product.Description = description;
+        product.IsActive = true;
 
-        insertAttachments(images, cup.Id);
-        runApprovalProcess(cup.Id);
+        insert product;
+
+        Pricebook2 standardPriceBook = [
+                SELECT Id, IsStandard
+                FROM Pricebook2
+                WHERE IsStandard = true
+                LIMIT 1
+        ];
+
+        PricebookEntry standardPriceBookEntry = new PricebookEntry(
+                Pricebook2Id = standardPriceBook.Id,
+                Product2Id = product.Id,
+                UnitPrice = price,
+                UseStandardPrice = false,
+                IsActive = true
+        );
+
+        insert standardPriceBookEntry;
+
+        insertAttachments(images, product.Id);
+        runApprovalProcess(product.Id);
     }
 
-    public static List<Cup__c> getUserProducts() {
+    public static List<Product2> getUserProducts() {
         String userId = UserInfo.getUserId();
-        List<CS_ProductWrapper> wrapper = new List<CS_ProductWrapper>();
-        List<Cup__c> products = [
-                SELECT Name, Price__c
-                FROM Cup__c
-                WHERE OwnerId = :userId
-                AND Approval__c = 'Approved'
+        List<Product2> products = [
+                SELECT Name
+                FROM Product2
+                WHERE CreatedById = :userId
+                AND IsActive = true
         ];
         return products;
     }
@@ -131,11 +183,10 @@ public with sharing class CS_ProductService {
 
     private static void runApprovalProcess(String objectId) {
         Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
-        req1.setComments('Submitting request for approval.');
+        req1.setComments(System.Label.Email_Approval_Title);
         req1.setObjectId(objectId);
-        req1.setProcessDefinitionNameOrId('New_Cup_Approval');
+        req1.setProcessDefinitionNameOrId('New_Product_Approval');
         req1.setSkipEntryCriteria(true);
         Approval.ProcessResult result = Approval.process(req1);
     }
-//custom label
 }

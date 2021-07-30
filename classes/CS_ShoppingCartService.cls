@@ -3,21 +3,25 @@ public with sharing class CS_ShoppingCartService {
     public static List<CS_ShoppingCartWrapper> getCartProducts() {
         String userId = UserInfo.getUserId();
         List<ShoppingCart__c> cart = [
-                SELECT Cup__r.Name, Cup__r.Price__c, Quantity__c, Id, Selected__c
+                SELECT Product__r.Name, Quantity__c, Id, Selected__c, Price__c
                 FROM ShoppingCart__c
                 WHERE User__c = :userId
         ];
+        System.debug(parseToWrapper(cart));
         return parseToWrapper(cart);
     }
 
     public static Decimal getOverallSum() {
         String userId = UserInfo.getUserId();
         AggregateResult result = [
-                SELECT SUM(Price__c) overallSum
+                SELECT SUM(TotalSum__c) overallSum
                 FROM ShoppingCart__c
                 WHERE User__c = :userId
                 AND Selected__c = true
         ];
+
+        List<ShoppingCart__c> cart = [SELECT Product__c FROM ShoppingCart__c WHERE User__c = :userId];
+
 
         return (Decimal) result.get('overallSum');
     }
@@ -83,9 +87,9 @@ public with sharing class CS_ShoppingCartService {
             wrapper.add(
                     new CS_ShoppingCartWrapper(
                             product.Id,
-                            product.Cup__r.Id,
-                            product.Cup__r.Name,
-                            product.Cup__r.Price__c,
+                            product.Product__r.Id,
+                            product.Product__r.Name,
+                            CS_ProductService.getProductPrice(product.Product__r.Id),
                             (Integer) product.Quantity__c,
                             product.Selected__c
                     )

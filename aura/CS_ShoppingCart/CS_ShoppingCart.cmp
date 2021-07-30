@@ -1,8 +1,9 @@
 <aura:component description="CS_ShoppingCart" controller="CS_ShoppingCartController" extends="c:CS_ErrorHandler"
                 implements="lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
-    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="shoppingCart" type="CS_ShoppingCartWrapper[]"/>
     <aura:attribute name="overallSum" type="Decimal" default="0"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <lightning:navigation aura:id="navService"/>
     <div class="container">
         <div class="childContainer">
             <aura:iteration items="{!v.shoppingCart}" var="product" indexVar="index">
@@ -70,7 +71,7 @@
                     </p>
                 </div>
                 <div class="paymentButton slds-m-top_x-large">
-                    <lightning:button type="button" label="Payment and Shipment"/>
+                    <lightning:button type="button" label="Payment and Shipment" onclick="{!c.onGoToOrder}"/>
                 </div>
             </div>
         </aura:if>

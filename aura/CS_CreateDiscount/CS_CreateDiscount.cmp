@@ -1,7 +1,7 @@
 <aura:component description="CS_CreateDiscount" controller="CS_DiscountManagerController" extends="c:CS_ErrorHandler">
     <aura:attribute name="discountTitle" type="String"/>
     <aura:attribute name="discountValue" type="Decimal"/>
-    <aura:attribute name="addedProducts" type="Cup__c[]"/>
+    <aura:attribute name="addedProducts" type="PricebookEntry[]"/>
     <aura:attribute name="title" type="String"/>
     <aura:attribute name="discountType" type="String" default="Percent"/>
     <aura:attribute name="startDate" type="Date"/>
@@ -40,36 +40,34 @@
     <hr/>
     <div style="display:flex; flex-direction: row; width: 100%; justify-content: center" class="slds-m-around_large">
         <div class="slds-m-around_large dateInputContainer slds-p-around_large">
-            <h1 class="dateContainerLabel">Start</h1>
             <lightning:input type="datetime-local" label="Start Date" value="{!v.startDate}"/>
         </div>
         <div class="slds-m-around_large dateInputContainer slds-p-around_large">
-            <h1 class="dateContainerLabel">End</h1>
             <lightning:input type="datetime-local" label="End Date" value="{!v.endDate}"/>
         </div>
     </div>
     <hr/>
     <div class="lists">
         <c:CS_DiscountProductList/>
-        <div class="listContainer slds-m-around_large">
-            <h1>Added Products</h1>
+        <div class="listContainer slds-m-around_small">
+            <h1 style="font-weight: bold">Added products</h1>
             <aura:iteration items="{!v.addedProducts}" var="product">
                 <div class="slds-m-around_small productListElement">
                     <div style="width:10%; height: 10%">
-                        <c:CS_ProductCarouselImage id="{!product.Id}" aura:id="imgCarousel"/>
+                        <c:CS_ProductCarouselImage id="{!product.Product2.Id}" aura:id="imgCarousel"/>
                     </div>
                     <div style="max-width: 20%">
                         <p>
-                                {!product.Name}
+                                {!product.Product2.Name}
                         </p>
                     </div>
                     <div style="max-width: 20%">
                         <p>
-                            <lightning:formattedNumber value="{!product.Price__c}"
+                            <lightning:formattedNumber value="{!product.UnitPrice}"
                                                        style="currency"/>
                         </p>
                     </div>
-                    <div onclick="{!c.onRemove}" data-id="{!product.Id}">
+                    <div onclick="{!c.onRemove}" data-id="{!product.Product2.Id}">
                         <lightning:icon class="icon" size="x-small" title="Remove" alternativeText="Remove"
                                         iconName="utility:delete"/>
                     </div>

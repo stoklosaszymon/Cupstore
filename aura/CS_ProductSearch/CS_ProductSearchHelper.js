@@ -13,6 +13,12 @@
                     "productList": response.getReturnValue(),
                 });
                 event.fire();
+            } else {
+              this.handleMessage(
+                  $A.get("$Label.c.Error"),
+                  $A.get("$Label.c.Error_Add_Discount"),
+                  "error"
+              );
             }
         });
         $A.enqueueAction(action);
@@ -29,4 +35,3 @@
         navService.navigate(pageReference);
     }
 })
-// obsluga bledow

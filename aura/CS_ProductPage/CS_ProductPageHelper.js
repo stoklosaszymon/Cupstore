@@ -7,6 +7,7 @@
           let state = response.getState();
           if (state == 'SUCCESS') {
               component.set("v.productDetails", response.getReturnValue());
+              component.set("v.discountValue", response.getReturnValue().price);
           } else {
               this.handleMessage(
                   $A.get("$Label.c.Error"),
@@ -75,4 +76,21 @@
         component.set("v.quantity", quantity - 1);
        }
     },
+
+    getProductPrice: function(component) {
+       let id = component.get("v.recordId");
+       let action = component.get("c.getProductPrice");
+       action.setParams({
+           "id": id
+       })
+       action.setCallback(this, function(response) {
+          let state = response.getState();
+          if (state == 'SUCCESS') {
+              console.log(response.getReturnValue())
+              component.set("v.discountValue", response.getReturnValue())
+              console.log(response.getReturnValue());
+          }
+       });
+       $A.enqueueAction(action);
+    }
 })
