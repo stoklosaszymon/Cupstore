@@ -1,0 +1,36 @@
+<aura:component description="CS_HotDeal" controller="CS_HotDealsController"
+                implements="force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="hotDeal" type="CS_HotDealWrapper"/>
+    <aura:attribute name="seconds" type="Integer" default="76800"/>
+    <aura:attribute name="time" type="String"/>
+    <aura:attribute name="productId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler name="change" value="{!v.hotDeal}" action="{!c.onChange}"/>
+    <lightning:navigation aura:id="navService"/>
+    <div class="container slds-p-around_large" style="text-align: center; cursor: pointer"
+         data-id="{!v.hotDeal.productId}" onclick="{!c.onRedirectToProduct}">
+        <div style="width:100%; display: flex; flex-direction: row; justify-content: space-between">
+            <h1 class="header">Hot Deal</h1>
+            <div class="slds-p-around_medium" style="border-radius: 8px; background-color: gray">
+                <p style="font-weight: bold; font-size: 1.2rem; color: white">{!v.hotDeal.discountValue}%</p>
+            </div>
+        </div>
+        <div class="slds-m-around_large">
+            <c:CS_ProductCarouselImage id="{!v.hotDeal.productId}" aura:id="imgCarousel"/>
+        </div>
+        <p class="header" style="align-self: center;">{!v.hotDeal.productName}</p>
+        <p class="header slds-m-top_x-large" style="color: gray; text-decoration: line-through">
+            <lightning:formattedNumber value="{!v.hotDeal.standardPrice}"
+                                       style="currency"/>
+        </p>
+        <p class="header" style="font-size: 2.1rem;color: red">
+            <lightning:formattedNumber value="{!v.hotDeal.price}"
+                                       style="currency"/>
+        </p>
+        <div class="slds-m-top_large" style="font-size: 1.5rem; font-weight: bold">
+            <h1 style="font-size: 1.1rem; color: gray">Discount ends in: </h1>
+                {!v.time}
+        </div>
+    </div>
+</aura:component>
+

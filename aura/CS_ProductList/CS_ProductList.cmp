@@ -1,14 +1,15 @@
 <aura:component description="CS_ProductList" controller="CS_ProductController"
                 implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="products" type="CS_ProductListWrapper[]"/>
+    <aura:attribute name="customList" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:handler event="c.CS_SearchProduct" action="{!c.handleSearch}"/>
     <aura:registerEvent type="c.CS_SelectProduct" name="selectProduct"/>
-    <aura:attribute name="products" type="CS_ProductListWrapper[]"/>
     <lightning:navigation aura:id="navService"/>
 
     <div class="listContainer">
         <aura:iteration items="{!v.products}" var="product" indexVar="index">
-            <div class="productTile slds-m-around_large slds-p-around_x-large" data-id="{!product.id}"
+            <div class="productTile slds-m-around_medium slds-p-around_large" data-id="{!product.id}"
                  onclick="{!c.handleSelect}">
                 <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
                     <c:CS_ProductCarouselImage id="{!product.id}" aura:id="imgCarousel"/>

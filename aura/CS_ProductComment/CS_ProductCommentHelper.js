@@ -43,7 +43,6 @@
             if (state == 'SUCCESS') {
                 component.set('v.textBody', '');
                 component.set('v.rating', 0);
-                this.getReviews(component);
                 this.handleMessage($A.get("$Label.c.Success"), $A.get("$Label.c.Review_Added"), 'success');
             } else {
                 this.handleMessage($A.get("$Label.c.Error"), $A.get("$Label.c.Error_Add_Review"), 'error');

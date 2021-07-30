@@ -1,0 +1,21 @@
+.THIS {
+}
+
+.THIS.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+    border-radius: 8px;
+    align-items: center
+}
+
+.THIS .header {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.THIS .slds-carousel__indicators {
+   display: none;
+}

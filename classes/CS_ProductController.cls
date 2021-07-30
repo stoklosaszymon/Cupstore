@@ -43,4 +43,14 @@ public with sharing class CS_ProductController {
     public static Decimal getProductPrice(String id) {
         return CS_ProductService.getProductPrice(id);
     }
+
+    @AuraEnabled
+    public static List<CS_ProductListWrapper> getTopRated() {
+        return CS_ProductService.getTopRated();
+    }
+
+    @AuraEnabled
+    public static List<CS_ProductListWrapper> getRandom() {
+        return CS_ProductService.getRandomProduct();
+    }
 }

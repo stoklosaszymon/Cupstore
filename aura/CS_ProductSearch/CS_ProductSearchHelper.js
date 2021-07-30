@@ -2,8 +2,9 @@
     handleSearch: function(component) {
         let query = sessionStorage.getItem( 'query' );
         let action = component.get("c.searchProduct");
+        console.log("search", query);
         action.setParams({
-             "query": query ? query : ''
+             "query": query == undefined ? ' ': query
          });
         action.setCallback(this, function(response) {
             let state = response.getState();
@@ -27,7 +28,7 @@
         let pageReference = {
             type: 'comm__namedPage',
             attributes: {
-                name: 'Home'
+                name: 'productList__c'
             },
         };
         sessionStorage.setItem( 'query', component.get("v.query") );

@@ -1,0 +1,17 @@
+<aura:component description="CS_HomePage" implements="forceCommunity:availableForAllPageTypes"
+                controller="CS_ProductController">
+    <aura:attribute name="topRated" type="CS_ProductListWrapper[]"/>
+    <aura:attribute name="random" type="CS_ProductListWrapper[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <div class="slds-m-around_x-large" style="display: flex; flex-direction: row; justify-content: space-between">
+        <div style="width:30%; height: 90%">
+            <c:CS_HotDeal/>
+        </div>
+        <div style="width: 70%: height: 30%; transform: scale(0.85); margin-top: -100px">
+            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">Top Rated</h1>
+            <c:CS_ProductList products="{!v.topRated}" customList="true"/>
+            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">Suggested</h1>
+            <c:CS_ProductList products="{!v.random}" customList="true"/>
+        </div>
+    </div>
+</aura:component>

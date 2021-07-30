@@ -13,7 +13,7 @@ public with sharing class CS_ProductService {
                 AND IsActive = true
         ];
         List<CS_ProductListWrapper> wrapperList = new List<CS_ProductListWrapper>();
-        for (Product2 product: products) {
+        for (Product2 product : products) {
             CS_ProductListWrapper wrapper = new CS_ProductListWrapper(
                     product.Id,
                     product.Name,
@@ -27,8 +27,8 @@ public with sharing class CS_ProductService {
     public static CS_ProductWrapper getProduct(String id) {
         PricebookEntry product = [
                 SELECT Product2.Name,
-                        Product2.Description,
-                        UnitPrice
+                       Product2.Description,
+                       UnitPrice
                 FROM PricebookEntry
                 WHERE Product2.Id = :id
         ];
@@ -179,6 +179,47 @@ public with sharing class CS_ProductService {
             attachments.add(attachment);
         }
         insert attachments;
+    }
+
+    public static List<CS_ProductListWrapper> getTopRated() {
+        List<ProductReview__c> reviews = [
+                SELECT Rating__c, Product__r.Id, Product__r.Name
+                FROM ProductReview__c
+                ORDER BY Rating__c DESC
+                LIMIT 3
+        ];
+
+        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
+        for (ProductReview__c review : reviews) {
+            wrapper.add(new CS_ProductListWrapper(
+                    review.Product__r.Id,
+                    review.Product__r.Name,
+                    CS_ProductService.getProductPrice(review.Product__r.Id)
+            ));
+        }
+
+        return wrapper;
+    }
+
+    public static List<CS_ProductListWrapper> getRandomProduct() {
+        Integer randomNumber = Integer.valueof((Math.random() * 6));
+        List<PricebookEntry> pricebookEntries = [
+                SELECT Product2Id, Product2.Name
+                FROM PricebookEntry
+                LIMIT 3
+                OFFSET :randomNumber
+        ];
+
+        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
+        for (PricebookEntry pricebookEntry : pricebookEntries) {
+            wrapper.add(new CS_ProductListWrapper(
+                    pricebookEntry.Product2Id,
+                    pricebookEntry.Product2.Name,
+                    CS_ProductService.getProductPrice(pricebookEntry.Product2Id)
+            ));
+        }
+
+        return wrapper;
     }
 
     private static void runApprovalProcess(String objectId) {

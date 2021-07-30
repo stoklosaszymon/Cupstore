@@ -2,7 +2,7 @@
     <aura:attribute name="id" type="String"/>
     <aura:attribute name="attachments" type="Attachment[]"/>
     <aura:attribute name="autoScroll" type="Boolean" default="false"/>
-    <aura:handler name="change" value="{!v.autoScroll}" action="{!c.onAutoScrollChange}"/>
+    <aura:handler name="change" value="{!v.id}" action="{!c.onInit}"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <div>
         <aura:if isTrue="{!v.autoScroll}">

@@ -1,12 +1,13 @@
 ({
     onInit: function(component, event, helper) {
-        var id = component.get("v.id");
+        let id = component.get("v.id");
         helper.getAttachments(component, id);
     },
-     onAutoScrollChange: function(component, event, helper) {
-          console.log('zmiana')
 
-          var carousel = component.find("carousel");
+     onAutoScrollChange: function(component, event, helper) {
+        let carousel = component.find("carousel");
+        if ( carousel ) {
           carousel.set("v.disableAutoScroll", "true");
-     }
+        }
+     },
 })
