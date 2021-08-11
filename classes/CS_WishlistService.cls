@@ -22,7 +22,6 @@ public with sharing class CS_WishlistService {
         }
         return false;
     }
-
     public static List<CS_ProductListWrapper> getWishlist() {
 
         String userId = UserInfo.getUserId();
@@ -37,7 +36,8 @@ public with sharing class CS_WishlistService {
             CS_ProductListWrapper wrapper = new CS_ProductListWrapper(
                     wishlistElement.Product__r.Id,
                     wishlistElement.Product__r.Name,
-                    CS_ProductService.getProductPrice(wishlistElement.Product__r.Id)
+                    CS_ProductService.getProductPrice(wishlistElement.Product__r.Id),
+                    0
             );
             wrapperList.add(wrapper);
         }

@@ -18,10 +18,8 @@
                   "success"
               );
             } else {
-              this.handleMessage(
-                  $A.get("$Label.c.Error"),
-                  $A.get("$Label.c.Error_Add_Discount"),
-                  "error"
+              this.handleErrors(
+                 response.getError()
               );
             }
         });
@@ -30,7 +28,9 @@
 
     selectProduct: function(component, event) {
         let addedProducts = component.get("v.addedProducts");
-        addedProducts.push(event.getParam("product"));
+        let product = event.getParam("product");
+        component.set("v.addedProducts", this.filterList(component, product.id));
+        addedProducts.push(product);
         component.set("v.addedProducts", addedProducts);
     },
 
@@ -41,11 +41,11 @@
 
     removeFromList: function(component, event) {
         let id = event.currentTarget.dataset.id;
-        component.set("v.addedProducts", this.filterList(id));
+        component.set("v.addedProducts", this.filterList(component, id));
     },
 
-    filterList: function(id) {
+    filterList: function(component, id) {
         let products = component.get("v.addedProducts");
-        return products.filter(product => product.Product2.Id == id);
+        return products.filter(product => product.Product2Id != id);
     }
 })

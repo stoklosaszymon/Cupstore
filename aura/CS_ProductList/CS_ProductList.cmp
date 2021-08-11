@@ -8,22 +8,39 @@
     <lightning:navigation aura:id="navService"/>
 
     <div class="listContainer">
-        <aura:iteration items="{!v.products}" var="product" indexVar="index">
-            <div class="productTile slds-m-around_medium slds-p-around_large" data-id="{!product.id}"
-                 onclick="{!c.handleSelect}">
-                <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
-                    <c:CS_ProductCarouselImage id="{!product.id}" aura:id="imgCarousel"/>
+        <aura:if isTrue="{!v.products}">
+            <aura:iteration items="{!v.products}" var="product" indexVar="index">
+                <div class="productTile slds-m-around_medium slds-p-around_large" data-id="{!product.id}"
+                     onclick="{!c.handleSelect}">
+                    <div onmouseover="{!c.onHover}" onmouseleave="{!c.onLeave}" data-id="{!index}">
+                        <c:CS_ProductCarouselImage id="{!product.id}" aura:id="imgCarousel"/>
+
+                    </div>
+                    <div class="productName">
+                        <p>
+                                {!product.name}
+                        </p>
+                        <div style="display: flex: flex-direction: column">
+                            <aura:if isTrue="{!product.price == product.standardPrice}">
+                                <p class="standardPrice">
+                                    <lightning:formattedNumber value="{!product.price}"
+                                                               style="currency"/>
+                                </p>
+                                <aura:set attribute="else">
+                                    <p class="crossedOutPrice">
+                                        <lightning:formattedNumber value="{!product.standardPrice}"
+                                                                   style="currency"/>
+                                    </p>
+                                    <p class="productPrice">
+                                        <lightning:formattedNumber value="{!product.price}"
+                                                                   style="currency"/>
+                                    </p>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div>
                 </div>
-                <div class="productName">
-                    <p>
-                            {!product.name}
-                    </p>
-                    <p>
-                        <lightning:formattedNumber value="{!product.price}"
-                                                   style="currency"/>
-                    </p>
-                </div>
-            </div>
-        </aura:iteration>
+            </aura:iteration>
+        </aura:if>
     </div>
 </aura:component>

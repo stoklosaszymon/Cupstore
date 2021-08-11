@@ -12,7 +12,7 @@
             <h1 class="header">{!$Label.c.Reviews}</h1>
             <div aura:id="rating">
                 <c:CS_StarRating value="{!v.rating}"/>
-                {!v.body}
+                    {!v.body}
             </div>
 
             <lightning:textarea value="{!v.textBody}"/>

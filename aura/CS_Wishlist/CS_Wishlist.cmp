@@ -3,6 +3,9 @@
     <aura:attribute name="wishlist" type="CS_ProductListWrapper[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <lightning:navigation aura:id="navService"/>
+    <div class="slds-m-left_x-large">
+        <h1 style="font-size: 1.5rem; font-weight: bold; margin-left: 10%">{!$Label.c.Wishlist}</h1>
+    </div>
     <div class="container">
         <div class="childContainer">
             <aura:iteration items="{!v.wishlist}" var="product">

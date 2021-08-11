@@ -1,38 +1,34 @@
 <aura:component description="CS_CreateDiscount" controller="CS_DiscountManagerController" extends="c:CS_ErrorHandler">
     <aura:attribute name="discountTitle" type="String"/>
-    <aura:attribute name="discountValue" type="Decimal"/>
+    <aura:attribute name="discountValue" type="Decimal" default="0"/>
     <aura:attribute name="addedProducts" type="PricebookEntry[]"/>
     <aura:attribute name="title" type="String"/>
     <aura:attribute name="discountType" type="String" default="Percent"/>
     <aura:attribute name="startDate" type="Date"/>
-    <aura:attribute name="startTime" type="Time"/>
     <aura:attribute name="endDate" type="Date"/>
-    <aura:attribute name="endTime" type="Time"/>
     <aura:handler name="selectDiscountProduct" event="c:CS_SelectDiscountProduct" action="{!c.onSelectProduct}"/>
     <div class=" slds-m-around_large inputsContainer">
         <div class="discountValueContainer slds-m-around_large">
             <div class="inputLabel slds-m-right_medium">
-                <h1>Title</h1>
+                <h1>{!$Label.c.Title}</h1>
             </div>
             <div class="discountValueContainer">
                 <lightning:input name="productName"
                                  value="{! v.title }"/>
             </div>
         </div>
-        <hr/>
         <div class="discountValueContainer slds-m-around_large">
             <div class="inputLabel slds-m-right_medium">
-                <h1 style="font-size: 1rem">Discount</h1>
-                <p style="font-size: 0.7rem">(Percent or Fixed - fixed sum or percent of product cost that you put,
-                    will be subtracted from product cost)</p>
+                <h1 style="font-size: 1rem">{!$Label.c.Discount}</h1>
+                <p style="font-size: 0.7rem">{!$Label.c.Percent_Or_Fidex}</p>
             </div>
             <div class="discountValueContainer">
                 <lightning:input name="productName"
                                  value="{! v.discountValue }"
                                  class="slds-m-right_medium"/>
                 <lightning:select aura:id="discountType" onchange="{!c.onTypeChange}">
-                    <option value="Percent">Percent</option>
-                    <option value="Fixed">Fixed</option>
+                    <option value="{!$Label.c.Percent}">{!$Label.c.Percent}</option>
+                    <option value="{!$Label.c.Fixed}">{!$Label.c.Fixed}</option>
                 </lightning:select>
             </div>
         </div>
@@ -40,40 +36,61 @@
     <hr/>
     <div style="display:flex; flex-direction: row; width: 100%; justify-content: center" class="slds-m-around_large">
         <div class="slds-m-around_large dateInputContainer slds-p-around_large">
-            <lightning:input type="datetime-local" label="Start Date" value="{!v.startDate}"/>
+            <lightning:input type="datetime-local" label="{!$Label.c.Start_Date}" value="{!v.startDate}"/>
         </div>
         <div class="slds-m-around_large dateInputContainer slds-p-around_large">
-            <lightning:input type="datetime-local" label="End Date" value="{!v.endDate}"/>
+            <lightning:input type="datetime-local" label="{!$Label.c.End_Date}" value="{!v.endDate}"/>
         </div>
     </div>
     <hr/>
     <div class="lists">
-        <c:CS_DiscountProductList/>
-        <div class="listContainer slds-m-around_small">
-            <h1 style="font-weight: bold">Added products</h1>
-            <aura:iteration items="{!v.addedProducts}" var="product">
-                <div class="slds-m-around_small productListElement">
-                    <div style="width:10%; height: 10%">
-                        <c:CS_ProductCarouselImage id="{!product.Product2.Id}" aura:id="imgCarousel"/>
+        <c:CS_DiscountProductList addedProducts="{!v.addedProducts}"/>
+        <div class="slds-m-around_medium" style="width: 50%">
+            <h1 style="font-weight: bold">{!$Label.c.Added_Products}</h1>
+            <div class="listLabels">
+                <p>{!$Label.c.Standard}</p>
+                <p style="margin-left: 13%">{!$Label.c.Discounted}</p>
+            </div>
+            <div class="listContainer">
+                <aura:iteration items="{!v.addedProducts}" var="product">
+                    <div class="slds-m-around_small productListElement">
+                        <div style="width:10%">
+                            <c:CS_ProductCarouselImage id="{!product.Product2.Id}" aura:id="imgCarousel"/>
+                        </div>
+                        <div style="width: 40%">
+                            <p>{!product.Product2.Name}</p>
+                        </div>
+                        <div style="width: 20%">
+                            <p>
+                                <lightning:formattedNumber
+                                        value="{!product.UnitPrice}"
+                                        style="currency"/>
+                            </p>
+                        </div>
+                        <div style="width: 20%">
+                            <aura:if isTrue="{!v.discountType == 'Percent'}">
+                                <p>
+                                    <lightning:formattedNumber
+                                            value="{!product.UnitPrice - (product.UnitPrice * v.discountValue / 100)}"
+                                            style="currency"/>
+                                </p>
+                            </aura:if>
+                            <aura:if isTrue="{!v.discountType == 'Fixed'}">
+                                <p>
+                                    <lightning:formattedNumber value="{!product.UnitPrice -  v.discountValue}"
+                                                               style="currency"/>
+                                </p>
+                            </aura:if>
+                        </div>
+                        <div onclick="{!c.onRemove}" data-id="{!product.Product2.Id}">
+                            <lightning:icon class="icon" size="x-small" title="{!$Label.c.Remove}"
+                                            alternativeText="{!$Label.c.Remove}"
+                                            iconName="utility:delete"/>
+                        </div>
                     </div>
-                    <div style="max-width: 20%">
-                        <p>
-                                {!product.Product2.Name}
-                        </p>
-                    </div>
-                    <div style="max-width: 20%">
-                        <p>
-                            <lightning:formattedNumber value="{!product.UnitPrice}"
-                                                       style="currency"/>
-                        </p>
-                    </div>
-                    <div onclick="{!c.onRemove}" data-id="{!product.Product2.Id}">
-                        <lightning:icon class="icon" size="x-small" title="Remove" alternativeText="Remove"
-                                        iconName="utility:delete"/>
-                    </div>
-                </div>
-            </aura:iteration>
+                </aura:iteration>
+            </div>
         </div>
     </div>
-    <lightning:button label="Add Discount" onclick="{!c.onAddDiscount}"/>
+    <lightning:button label="{!$Label.c.Create_Discount}" onclick="{!c.onAddDiscount}"/>
 </aura:component>

@@ -1,4 +1,3 @@
-
 public with sharing class CS_WishlistController {
 
     @AuraEnabled

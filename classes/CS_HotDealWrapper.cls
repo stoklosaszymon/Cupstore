@@ -11,7 +11,10 @@ public with sharing class CS_HotDealWrapper {
     public Decimal standardPrice {get; set;}
     @AuraEnabled
     public Decimal timeLeft {get; set;}
-
+    @AuraEnabled
+    public Decimal amount {get; set;}
+    @AuraEnabled
+    public Decimal sold {get; set;}
 
     public CS_HotDealWrapper(
             String productId,
@@ -19,12 +22,16 @@ public with sharing class CS_HotDealWrapper {
             Decimal discountValue,
             Decimal price,
             Decimal standardPrice,
+            Decimal amount,
+            Decimal sold,
             Decimal timeLeft) {
         this.productId = productId;
         this.productName = productName;
         this.discountValue = discountValue;
         this.price = price;
         this.standardPrice = standardPrice;
+        this.amount = amount;
+        this.sold = sold;
         this.timeLeft = timeLeft;
     }
 }

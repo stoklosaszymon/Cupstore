@@ -97,4 +97,14 @@ public with sharing class CS_ShoppingCartService {
         }
         return wrapper;
     }
+
+    public static void clearCart() {
+        String userId = UserInfo.getUserId();
+        List<ShoppingCart__c> cart = [
+                SELECT Selected__c
+                FROM ShoppingCart__c
+                WHERE User__c = :userId
+        ];
+        delete cart;
+    }
 }

@@ -1,0 +1,77 @@
+<aura:component description="CS_OrderList" controller="CS_OrderController" extends="c:CS_ErrorHandler"
+                implements="forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="orders" type="CS_OrderListWrapper[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <h1 class="slds-m-around_large" style="font-size: 1.5rem">{!$Label.c.Your_Orders}</h1>
+    <div class="mainContainer">
+        <div class="listContainer">
+            <div class="labels">
+                <div class="orderLabels">
+                    <div class="caseInfo slds-p-around_medium">
+                        <p style="margin-left:1%">{!$Label.c.Nr}</p>
+                        <p>{!$Label.c.Shipping_Address}</p>
+                        <p>{!$Label.c.Status}</p>
+                        <p style="margin-left: 2%">{!$Label.c.Created_Date}</p>
+                        <p>{!$Label.c.Order_Number}</p>
+                        <p>Cases</p>
+                        <p>{!$Label.c.Total}</p>
+                    </div>
+                    <p class="actionButton">{!$Label.c.Action}</p>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.orders.length == 0}">
+            <div class="listElement slds-p-around_medium slds-m-around_medium">
+                <p>{!$Label.c.No_Orders}</p>
+            </div>
+        </aura:if>
+        <aura:iteration items="{!v.orders}" var="order" indexVar="index">
+            <div class="listContainer slds-m-around_medium" tabindex="{!index}">
+                <div class="listElement">
+                    <div class="caseInfo slds-p-around_medium">
+                        <p>{!index + 1}.</p>
+                        <div style="display: flex; flex-direction: column;">
+                            <p>{!order.address.street}</p>
+                            <p>{!order.address.postalCode + ' ' + order.address.city}</p>
+                            <p>{!order.address.country}</p>
+                        </div>
+                        <p>{!order.status}</p>
+                        <p>
+                            <lightning:formattedDateTime value="{!order.createdDate}" year="numeric" month="numeric"
+                                                         day="numeric"
+                                                         hour="2-digit"
+                                                         minute="2-digit"
+                                                         hour12="false"/>
+                        </p>
+                        <p>{!order.orderNumber}</p>
+                        <p>{!order.cases}</p>
+                        <p>
+                            <lightning:formattedNumber value="{!order.total}"
+                                                       style="currency"/>
+                        </p>
+                    </div>
+                    <div class="actionButton" data-id="{!order.id}" onclick="{!c.onOpenModal}">
+                        <lightning:icon iconName="utility:shift_pattern_entry" alternativeText="{!$Label.c.Add_Case}"
+                                        title="{!$Label.c.Add_Case}"/>
+                    </div>
+                </div>
+                <div class="productList">
+                    <aura:iteration items="{!order.products}" var="product">
+                        <div class="productListItem slds-m-around_medium">
+                            <div style="width: 100px; height: 100px">
+                                <c:CS_ProductCarouselImage id="{!product.id}"/>
+                            </div>
+                            <p style="width:40%">{!product.name}</p>
+                            <p>{!product.quantity + ' ' + $Label.c.Items}</p>
+                            <p>
+                                <lightning:formattedNumber value="{!product.price}"
+                                                           style="currency"/>
+                            </p>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+        </aura:iteration>
+        <c:CS_Modal aura:id="modal"/>
+    </div>
+</aura:component>

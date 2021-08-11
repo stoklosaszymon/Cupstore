@@ -28,7 +28,7 @@
                 </p>
                 <aura:set attribute="else">
                     <div style="display: flex; flex-direction: row">
-                        <p class="productPrice crossedOutPrice slds-m-right_medium">
+                        <p class="crossedOutPrice slds-m-right_medium">
                             <lightning:formattedNumber value="{!v.productDetails.price}"
                                                        style="currency"/>
                         </p>

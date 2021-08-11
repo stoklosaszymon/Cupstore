@@ -3,5 +3,4 @@
        helper.getTopRated(component);
        helper.getRandom(component);
     },
-
 })

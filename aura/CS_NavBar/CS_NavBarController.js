@@ -1,35 +1,17 @@
 ({
     goToCart: function(component, event, helper) {
-        var pageReference = {
-            type: 'comm__namedPage',
-            attributes: {
-                name: 'Cart__c'
-            }
-        };
-
-        var navService = component.find("navService");
-        navService.navigate(pageReference);
+       helper.goToCart(component);
     },
+
     goToWishlist: function(component, event, helper) {
-        var pageReference = {
-            type: 'comm__namedPage',
-            attributes: {
-                name: 'Wishlist__c'
-            }
-        };
-
-        var navService = component.find("navService");
-        navService.navigate(pageReference);
+       helper.goToWishlist(component);
     },
-    goToHome: function(component, event, helper) {
-        var pageReference = {
-            type: 'comm__namedPage',
-            attributes: {
-                name: 'Home'
-            }
-        };
 
-        var navService = component.find("navService");
-        navService.navigate(pageReference);
+    goToHome: function(component, event, helper) {
+       helper.goToHome(component);
+    },
+
+    onSelect: function (component, event, helper) {
+       helper.handleSelect(component, event);
     }
 })

@@ -14,8 +14,13 @@
                            class="slds-m-right_large"/>
            </span>
             <span style="cursor: pointer" onclick="{!c.goToWishlist}">
-           <lightning:icon iconName="custom:custom1" alternativeText="{!$Label.c.Wishlist}" title="{!$Label.c.Wishlist}"/>
+           <lightning:icon iconName="custom:custom1" alternativeText="{!$Label.c.Wishlist}"
+                           title="{!$Label.c.Wishlist}"/>
            </span>
+            <lightning:buttonMenu class="slds-m-left_small" alternativeText="{!$Label.c.Show_menu}" onselect="{!c.onSelect}">
+                <lightning:menuItem value="{!$Label.c.Complaint}" label="{!$Label.c.Complaints}"/>
+                <lightning:menuItem value="Orders" label="Orders"/>
+            </lightning:buttonMenu>
         </div>
     </div>
 </aura:component>

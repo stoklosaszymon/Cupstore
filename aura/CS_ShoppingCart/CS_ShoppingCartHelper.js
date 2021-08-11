@@ -8,7 +8,7 @@
     },
 
     getCartProducts: function(component) {
-        var action = component.get("c.getCartProducts");
+        let action = component.get("c.getCartProducts");
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state == 'SUCCESS') {
@@ -23,7 +23,7 @@
     removeFromCart: function(component, event) {
         let index = event.currentTarget.dataset.id;
         let id = this.getProductId(component, event);
-        var action = component.get("c.removeFromCart");
+        let action = component.get("c.removeFromCart");
         action.setParams({
             "productId": id
         })
@@ -43,8 +43,8 @@
     },
 
     increaseQuantity: function(component, event) {
-        var id = event.currentTarget.dataset.id;
-        var action = component.get("c.increaseQuantity");
+        let id = event.currentTarget.dataset.id;
+        let action = component.get("c.increaseQuantity");
         action.setParams({
             "id": id
         });
@@ -59,8 +59,8 @@
     },
 
     decreaseQuantity: function(component, event) {
-        var id = event.currentTarget.dataset.id;
-        var action = component.get("c.decreaseQuantity");
+        let id = event.currentTarget.dataset.id;
+        let action = component.get("c.decreaseQuantity");
         action.setParams({
             "id": id
         });
@@ -75,8 +75,8 @@
     },
 
     selectProduct: function(component, event) {
-        var productId = event.getSource().get("v.name");
-        var action = component.get("c.selectProduct");
+        let productId = event.getSource().get("v.name");
+        let action = component.get("c.selectProduct");
         action.setParams({
             "id": id
         });
@@ -90,13 +90,13 @@
     },
 
     getProductId: function(component, event) {
-        var index = event.currentTarget.dataset.id;
+        let index = event.currentTarget.dataset.id;
         let products = component.get("v.shoppingCart");
         return products[index].id;
     },
 
     setRemovedClass: function(component, event) {
-        var index = event.currentTarget.dataset.id;
+        let index = event.currentTarget.dataset.id;
         console.log(index);
         let target = component.find('listItem');
         if (target.length) {
@@ -107,14 +107,14 @@
     },
 
     goToOrder: function(component) {
-        var pageReference = {
+        let pageReference = {
             type: 'comm__namedPage',
             attributes: {
                 name: 'Order__c'
             }
         };
 
-        var navService = component.find("navService");
+        let navService = component.find("navService");
         navService.navigate(pageReference);
     },
 

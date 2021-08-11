@@ -2,14 +2,7 @@
 }
 
 .THIS #drop_zone {
-        display: flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content: center;
-        width: 50%;
-        height: 250px;
-        border-radius: 8px;
-        border: solid 1px gray;
+        width: 100%;
 }
 
 .THIS .slds-carousel__content {
@@ -30,4 +23,21 @@
 
 .THIS .listContainer > slds-carousel__indicators {
     display: none
+}
+
+.THIS .notVisible {
+    display: none;
+}
+
+.THIS .visible {
+    display: block;
+}
+
+.THIS .imgContainer {
+    width: 90px; display: flex; flex-direction: column; align-items:center;
+}
+
+.THIS .selectedImg {
+    border: 1px solid gray;
+    border-radius: 8px;
 }

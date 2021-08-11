@@ -9,26 +9,29 @@
     <aura:attribute name="phone" type="String"/>
     <aura:attribute name="postalCode" type="String"/>
     <aura:attribute name="shoppingCart" type="CS_ShoppingCartWrapper[]"/>
+    <aura:attribute name="overall" type="Decimal"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <lightning:navigation aura:id="navService"/>
     <div style="display: flex; flex-direction: row; justify-content: space-around; ">
         <div style="width: 40%; display: flex; flex-direction: column; justify-content: center">
-            <div class="slds-m-around_small" style="display: flex; flex-direction: row width: 100%; justify-content:center">
-
+            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">{!$Label.c.Create_Order}</h1>
+            <div class="slds-m-around_small"
+                 style="display: flex; flex-direction: row width: 100%; justify-content:center">
                 <div style="width:50%" class="slds-m-right_small">
                     <lightning:input name="firstName"
                                      value="{! v.firstName }"
-                                     label="First Name"/>
+                                     label="{!$Label.c.First_Name}"/>
                 </div>
                 <div style="width: 50%" class="slds-m-left_small">
                     <lightning:input name="lastName"
                                      value="{! v.lastName }"
-                                     label="Last Name"/>
+                                     label="{!$Label.c.Last_Name}"/>
                 </div>
             </div>
             <lightning:input name="country"
                              class="slds-m-around_small"
                              value="{! v.country }"
-                             label="Country"/>
+                             label="{!$Label.c.Country}"/>
             <lightning:input name="street"
                              class="slds-m-around_small"
                              value="{! v.street }"
@@ -36,33 +39,32 @@
             <lightning:input name="Postal Code"
                              class="slds-m-around_small"
                              value="{! v.postalCode }"
-                             label="Postal Code"/>
+                             label="{!$Label.c.Postal_Code}"/>
             <lightning:input name="city"
                              class="slds-m-around_small"
                              value="{! v.city }"
-                             label="City"/>
+                             label="{!$Label.c.City}"/>
             <lightning:input name="phone"
                              class="slds-m-around_small"
                              value="{! v.phone }"
-                             label="Phone"/>
+                             label="{!$Label.c.Phone}"/>
             <lightning:input name="email"
                              class="slds-m-around_small"
                              value="{! v.email }"
-                             label="Email"/>
-
+                             label="{!$Label.c.Email}"/>
         </div>
         <div class="slds-m-around_medium slds-p-around_large"
              style="border: 1px solid gray; border-radius: 8px; width: 40%; align-items: end">
-            <h1 style="font-size: 1.4rem; font-weight: bold">Your Order</h1>
+            <h1 style="font-size: 1.4rem; font-weight: bold">{!$Label.c.Your_Order}</h1>
             <div class="slds-m-around_small header">
-                <p>Product</p>
-                <p>Price</p>
+                <p>{!$Label.c.Product}</p>
+                <p>{!$Label.c.Price}</p>
             </div>
             <hr/>
             <aura:iteration items="{!v.shoppingCart}" var="product" indexVar="index">
                 <div class="slds-m-around_small header">
-                    <p>
-                    {!product.name}  x{!product.quantity}
+                    <p style="width: 40%">
+                        {!product.name}  x{!product.quantity}
                     </p>
                     <p>
                         <lightning:formattedNumber value="{!product.price * product.quantity}"
@@ -72,16 +74,17 @@
             </aura:iteration>
             <hr/>
             <div class="slds-m-around_small header">
-                <p>Overall</p>
-                <p>123</p>
+                <p>{!$Label.c.Overall}</p>
+                <p>
+                    <lightning:formattedNumber value="{!v.overall}"
+                                               style="currency"/>
+                </p>
             </div>
             <div style="width: 100%; display: flex; justify-content:center;">
                 <lightning:button type="button"
                                   class="slds-m-around_medium"
-                                  label="Create Order"
+                                  label="{!$Label.c.Make_An_Order}"
                                   onclick="{!c.onCreateOrder}"/>
             </div>
         </div>
-
     </div>
-</aura:component>

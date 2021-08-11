@@ -19,22 +19,21 @@
                   "Order created",
                   "success"
               );
+              this.goToHome(component);
           } else {
-              this.handleMessage(
-                  $A.get("$Label.c.Error"),
-                  "Order created",
-                  "error"
+              this.handleErrors(
+                  response.getError()
               );
           }
       });
       $A.enqueueAction(action);
    },
+
     getCartProducts: function(component) {
-        var action = component.get("c.getCartProducts");
+        let action = component.get("c.getCartProducts");
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state == 'SUCCESS') {
-                console.log(response.getReturnValue())
                 component.set("v.shoppingCart", response.getReturnValue());
                 this.getOverallSum(component);
             }
@@ -42,4 +41,21 @@
         $A.enqueueAction(action);
     },
 
+    goToHome: function(component) {
+        let pageReference = {
+            type: 'comm__namedPage',
+            attributes: {
+                name: 'Home'
+            }
+        };
+
+        let navService = component.find("navService");
+        navService.navigate(pageReference);
+    },
+
+    getOverallSum: function(component) {
+        let products = component.get("v.shoppingCart");
+        let prices = products.map( (product) => product.price * product.quantity);
+        component.set("v.overall", prices.reduce( (acc, p) => acc + p));
+    }
 })

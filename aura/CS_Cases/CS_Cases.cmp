@@ -1,0 +1,39 @@
+<aura:component description="CS_Cases" implements="forceCommunity:availableForAllPageTypes"
+                controller="CS_ComplaintController">
+    <aura:attribute name="cases" type="Case[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <lightning:navigation aura:id="navService"/>
+    <h1 class="slds-m-around_large" style="font-size: 1.5rem">{!$Label.c.Your_Cases}</h1>
+    <div class="caseList">
+        <div class="caseLabels slds-m-around_medium slds-p-around_medium">
+            <p >{!$Label.c.Nr}</p>
+            <p style="width: 20%">{!$Label.c.Created_Date}</p>
+            <p style="width: 20%">{!$Label.c.Subject}</p>
+            <p style="width: 10%">{!$Label.c.Case_Number}</p>
+            <p style="width: 5%">{!$Label.c.Action}</p>
+        </div>
+        <aura:if isTrue="{!v.cases.length == 0}">
+            <div class="caseListElement slds-m-around_medium slds-p-around_medium">
+                <p>{!$Label.c.No_Cases}</p>
+            </div>
+        </aura:if>
+        <aura:iteration items="{!v.cases}" var="case" indexVar="index">
+            <div class="caseListElement slds-m-around_medium slds-p-around_medium">
+                <p style="10%">{!index + 1}</p>
+                <p style="width: 20%">
+                    <lightning:formattedDateTime value="{!case.CreatedDate}" year="numeric" month="numeric"
+                                                 day="numeric"
+                                                 hour="2-digit"
+                                                 minute="2-digit"
+                                                 hour12="false"/>
+                </p>
+                <p style="width: 20%">{!case.Subject}</p>
+                <p style="width: 10%">{!case.CaseNumber}</p>
+                <div class="actionButton" data-id="{!case.Id}" onclick="{!c.goToFeeds}">
+                    <lightning:icon iconName="utility:shift_pattern_entry" alternativeText="{!$Label.c.Feeds}"
+                                    title="{!$Label.c.Feeds}"/>
+                </div>
+            </div>
+        </aura:iteration>
+    </div>
+</aura:component>

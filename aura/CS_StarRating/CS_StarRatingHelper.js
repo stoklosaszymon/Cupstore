@@ -1,6 +1,6 @@
 ({
     setRating: function(component, value) {
-        var event = component.getEvent("Rate");
+        let event = component.getEvent("Rate");
         event.setParams({
             "rating": value
         })

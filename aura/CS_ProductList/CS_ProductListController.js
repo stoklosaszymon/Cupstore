@@ -1,7 +1,6 @@
 ({
     onInit: function(component, event, helper) {
         if (component.get("v.customList") == false) {
-            console.log('false')
             helper.getProducts(component);
         }
     },

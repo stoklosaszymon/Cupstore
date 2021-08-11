@@ -8,7 +8,6 @@
                 aura:id="enter-search"
                 name="enter-search"
                 type="search"
-                value="{!v.query}"
-        />
+                value="{!v.query}"/>
     </div>
 </aura:component>

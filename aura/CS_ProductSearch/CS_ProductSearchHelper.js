@@ -1,29 +1,29 @@
 ({
     handleSearch: function(component) {
         let query = sessionStorage.getItem( 'query' );
+        component.set("v.query", query == undefined ? ' ': query);
         let action = component.get("c.searchProduct");
-        console.log("search", query);
         action.setParams({
-             "query": query == undefined ? ' ': query
+             "query": component.get("v.query")
          });
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state == 'SUCCESS') {
+                console.log(response.getReturnValue());
                 let event = $A.get("e.c:CS_SearchProduct");
                 event.setParams({
                     "productList": response.getReturnValue(),
                 });
                 event.fire();
             } else {
-              this.handleMessage(
-                  $A.get("$Label.c.Error"),
-                  $A.get("$Label.c.Error_Add_Discount"),
-                  "error"
+              this.handleErrors(
+                  response.getError()
               );
             }
         });
         $A.enqueueAction(action);
     },
+
     goToHome: function(component) {
         let pageReference = {
             type: 'comm__namedPage',

@@ -1,6 +1,6 @@
 ({
     isInWishlist: function(component, productId) {
-        var action = component.get("c.isInWishlist");
+        let action = component.get("c.isInWishlist");
         action.setParams({
             "productId": component.get("v.productId")
         });
@@ -11,7 +11,7 @@
         $A.enqueueAction(action);
     },
     addToWishlist: function(component) {
-        var action = component.get("c.addToWishlist");
+        let action = component.get("c.addToWishlist");
         action.setParams({
             "productId": component.get("v.productId")
         });
@@ -29,7 +29,7 @@
     },
 
     removeFromWishlist: function(component) {
-        var action = component.get("c.removeFromWishlist");
+        let action = component.get("c.removeFromWishlist");
         action.setParams({
             "id": component.get("v.productId")
         });

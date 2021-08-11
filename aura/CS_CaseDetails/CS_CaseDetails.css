@@ -1,0 +1,50 @@
+.THIS {
+}
+
+.THIS.detailsContainer {
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.THIS.detailsContainer > h1 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.THIS.detailsContainer > p {
+    font-size: 1rem;
+    margin-left: 1%;
+    margin-bottom: 1%;
+}
+
+.THIS .paragraph {
+    font-size: 1rem;
+    margin-left: 1%;
+    margin-bottom: 1%;
+}
+
+.THIS .details {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.THIS .info > h1 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.THIS .info > p {
+    font-size: 1rem;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.THIS.header {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

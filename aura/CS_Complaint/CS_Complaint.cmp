@@ -1,0 +1,58 @@
+<aura:component description="CS_Complaint" controller="CS_ComplaintController"
+                implements="forceCommunity:availableForAllPageTypes" extends="c:CS_ErrorHandler">
+    <aura:attribute name="subject" type="String"/>
+    <aura:attribute name="description" type="String"/>
+    <aura:attribute name="firstName" type="String"/>
+    <aura:attribute name="lastName" type="String"/>
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="reason" type="String"/>
+    <aura:attribute name="caseStatus" type="String"/>
+    <aura:attribute name="caseNumber" type="String"/>
+    <aura:attribute name="orderId" type="String"/>
+    <aura:attribute name="products" type="OrderItem[]"/>
+    <aura:attribute name="addedProducts" type="String[]"/>
+    <aura:method name="addNewCase" action="{!c.onAddCase}">
+        <aura:attribute name="orderId" type="String"/>
+    </aura:method>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <div style="display:flex; flex-direction: column">
+        <div style="display: flex; flex-direction: row width: 100%; justify-content:center">
+            <div style="width:50%" class="slds-m-right_small">
+                <lightning:input name="firstName"
+                                 value="{! v.firstName }"
+                                 label="{!$Label.c.First_Name}"/>
+            </div>
+            <div style="width: 50%" class="slds-m-left_small">
+                <lightning:input name="lastName"
+                                 value="{! v.lastName }"
+                                 label="{!$Label.c.Last_Name}"/>
+            </div>
+        </div>
+        <lightning:input name="email"
+                         value="{! v.email }"
+                         label="{!$Label.c.Email}"/>
+        <lightning:select aura:id="select" label="{!$Label.c.Case_Reason}" onchange="{!c.onChange}">
+            <option value="{!$Label.c.The_product_does_not_look_as_expected}">
+                    {!$Label.c.The_product_does_not_look_as_expected}
+            </option>
+            <option value="{!$Label.c.Wrong_product_received}">{!$Label.c.Wrong_product_received}</option>
+            <option value="{!$Label.c.The_product_is_damaged}">{!$Label.c.The_product_is_damaged}</option>
+            <option value="{!$Label.c.Other}">{!$Label.c.Other}</option>
+        </lightning:select>
+        <p class="slds-m-bottom_small slds-m-top_small" style="font-size: 0.9rem">{!$Label.c.Products}</p>
+        <aura:iteration items="{!v.products}" var="product">
+            <div data-id="{!product.Product2Id}" onclick="{!c.addProductToCase}">
+                <div>
+                    <input type="checkbox" class="slds-m-right_small"/>
+                        {!product.Product2.Name}
+                </div>
+            </div>
+        </aura:iteration>
+        <lightning:input name="productName"
+                         value="{! v.subject }"
+                         label="{!$Label.c.Subject}"/>
+        <lightning:textarea name="input1"
+                            value="{! v.description }"
+                            label="{!$Label.c.Description}"/>
+    </div>
+</aura:component>

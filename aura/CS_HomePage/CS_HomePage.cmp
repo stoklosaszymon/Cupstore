@@ -1,5 +1,5 @@
 <aura:component description="CS_HomePage" implements="forceCommunity:availableForAllPageTypes"
-                controller="CS_ProductController">
+                controller="CS_ProductController" extends="c:CS_ErrorHandler">
     <aura:attribute name="topRated" type="CS_ProductListWrapper[]"/>
     <aura:attribute name="random" type="CS_ProductListWrapper[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
@@ -8,9 +8,9 @@
             <c:CS_HotDeal/>
         </div>
         <div style="width: 70%: height: 30%; transform: scale(0.85); margin-top: -100px">
-            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">Top Rated</h1>
+            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">{!$Label.c.Top_Rated}</h1>
             <c:CS_ProductList products="{!v.topRated}" customList="true"/>
-            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">Suggested</h1>
+            <h1 class="slds-m-around_medium" style="font-size: 1.5rem; font-weight: bold">{!$Label.c.Suggested}</h1>
             <c:CS_ProductList products="{!v.random}" customList="true"/>
         </div>
     </div>

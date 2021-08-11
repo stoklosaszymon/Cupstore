@@ -1,16 +1,18 @@
-<aura:component description="CS_HotDeal" controller="CS_HotDealsController"
+<aura:component description="CS_HotDeal" controller="CS_HotDealsController" extends="c:CS_ErrorHandler"
                 implements="force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="hotDeal" type="CS_HotDealWrapper"/>
     <aura:attribute name="seconds" type="Integer" default="76800"/>
     <aura:attribute name="time" type="String"/>
     <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="interval" type="Map"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:handler name="change" value="{!v.hotDeal}" action="{!c.onChange}"/>
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
     <lightning:navigation aura:id="navService"/>
     <div class="container slds-p-around_large" style="text-align: center; cursor: pointer"
          data-id="{!v.hotDeal.productId}" onclick="{!c.onRedirectToProduct}">
         <div style="width:100%; display: flex; flex-direction: row; justify-content: space-between">
-            <h1 class="header">Hot Deal</h1>
+            <h1 class="header">{!$Label.c.Hot_Deal}</h1>
             <div class="slds-p-around_medium" style="border-radius: 8px; background-color: gray">
                 <p style="font-weight: bold; font-size: 1.2rem; color: white">{!v.hotDeal.discountValue}%</p>
             </div>
@@ -27,8 +29,15 @@
             <lightning:formattedNumber value="{!v.hotDeal.price}"
                                        style="currency"/>
         </p>
+        <div style="width: 100%">
+            <div style="display:flex; flex-direction:row; justify-content: space-between; font-size: 1rem;">
+                <span>{!$Label.c.Available}: {!v.hotDeal.amount}</span>
+                <span>{!$Label.c.Sold}: {!v.hotDeal.sold}</span>
+            </div>
+            <lightning:progressBar value="{!v.hotDeal.sold}" size="large"/>
+        </div>
         <div class="slds-m-top_large" style="font-size: 1.5rem; font-weight: bold">
-            <h1 style="font-size: 1.1rem; color: gray">Discount ends in: </h1>
+            <h1 style="font-size: 1.1rem; color: gray">{!$Label.c.Discount_End_Time}</h1>
                 {!v.time}
         </div>
     </div>

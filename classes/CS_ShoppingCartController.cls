@@ -40,6 +40,6 @@ public with sharing class CS_ShoppingCartController {
             String phone,
             String postalCode) {
         CS_OrderService.createOrder(firstName, lastName, email, city, country, street, phone, postalCode);
+        CS_ShoppingCartService.clearCart();
     }
-
 }

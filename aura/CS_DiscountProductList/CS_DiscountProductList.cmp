@@ -1,30 +1,36 @@
 <aura:component description="CS_DiscountProductList" controller="CS_ProductController">
-    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:attribute name="products" type="PricebookEntry[]"/>
+    <aura:attribute name="allProducts" type="PricebookEntry[]"/>
+    <aura:attribute name="addedProducts" type="PricebookEntry[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler name="change" value="{!v.addedProducts}" action="{!c.onChange}"/>
     <aura:registerEvent type="c:CS_SelectDiscountProduct" name="selectDiscountProduct"/>
-    <div class="listContainer slds-m-around_small">
-        <h1 style="font-weight: bold">Product List</h1>
-        <aura:iteration items="{!v.products}" var="product">
-            <div class="slds-m-around_small productListElement">
-                <div style="width:10%; height: 10%">
-                    <c:CS_ProductCarouselImage id="{!product.Product2.Id}" aura:id="imgCarousel"/>
+    <div class="slds-m-around_medium" style="width: 50%">
+        <h1 style="font-weight: bold">{!$Label.c.Product_List}</h1>
+        <div class="listContainer slds-m-around_small">
+            <aura:iteration items="{!v.products}" var="product">
+                <div class="slds-m-around_small productListElement">
+                    <div style="width:10%; height: 10%">
+                        <c:CS_ProductCarouselImage id="{!product.Product2.Id}" aura:id="imgCarousel"/>
+                    </div>
+                    <div style="width: 40%; justify-content:start" class="productName">
+                        <p>
+                                {!product.Product2.Name}
+                        </p>
+                    </div>
+                    <div style="max-width: 25%">
+                        <p>
+                            <lightning:formattedNumber value="{!product.UnitPrice}"
+                                                       style="currency"/>
+                        </p>
+                    </div>
+                    <div onclick="{!c.onSelectProduct}" data-id="{!product.Id}">
+                        <lightning:icon class="icon" size="x-small" title="{!$Label.c.Add}"
+                                        alternativeText="{!$Label.c.Add}"
+                                        iconName="utility:add"/>
+                    </div>
                 </div>
-                <div style="width: 40%; justify-content:start" class="productName">
-                    <p>
-                            {!product.Product2.Name}
-                    </p>
-                </div>
-                <div style="max-width: 25%">
-                    <p>
-                        <lightning:formattedNumber value="{!product.UnitPrice}"
-                                                   style="currency"/>
-                    </p>
-                </div>
-                <div onclick="{!c.selectProduct}" data-id="{!product.Id}" >
-                    <lightning:icon class="icon" size="x-small" title="Add" alternativeText="Add"
-                                    iconName="utility:add"/>
-                </div>
-            </div>
-        </aura:iteration>
+            </aura:iteration>
+        </div>
     </div>
 </aura:component>

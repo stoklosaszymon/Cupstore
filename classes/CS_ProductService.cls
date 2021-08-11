@@ -6,18 +6,19 @@ public with sharing class CS_ProductService {
 
     public static List<CS_ProductListWrapper> searchProduct(String query) {
         String searchQuery = '%' + query + '%';
-        List<Product2> products = [
-                SELECT Name, Id
-                FROM Product2
-                WHERE Name LIKE :searchQuery
-                AND IsActive = true
+        List<PricebookEntry> pricebookEntries = [
+                SELECT Product2Id, Product2.Name, UnitPrice
+                FROM PricebookEntry
+                WHERE Product2.Name LIKE :searchQuery
+                AND Product2.IsActive = true
         ];
         List<CS_ProductListWrapper> wrapperList = new List<CS_ProductListWrapper>();
-        for (Product2 product : products) {
+        for (PricebookEntry pricebookEntry : pricebookEntries) {
             CS_ProductListWrapper wrapper = new CS_ProductListWrapper(
-                    product.Id,
-                    product.Name,
-                    CS_ProductService.getProductPrice(product.Id)
+                    pricebookEntry.Product2Id,
+                    pricebookEntry.Product2.Name,
+                    CS_ProductService.getProductPrice(pricebookEntry.Product2Id),
+                    pricebookEntry.UnitPrice
             );
             wrapperList.add(wrapper);
         }
@@ -27,8 +28,8 @@ public with sharing class CS_ProductService {
     public static CS_ProductWrapper getProduct(String id) {
         PricebookEntry product = [
                 SELECT Product2.Name,
-                       Product2.Description,
-                       UnitPrice
+                        Product2.Description,
+                        UnitPrice
                 FROM PricebookEntry
                 WHERE Product2.Id = :id
         ];
@@ -125,6 +126,77 @@ public with sharing class CS_ProductService {
         return wrapper;
     }
 
+    public static List<Product2> getUserProducts() {
+        String userId = UserInfo.getUserId();
+        List<Product2> products = [
+                SELECT Name
+                FROM Product2
+                WHERE CreatedById = :userId
+                AND IsActive = true
+        ];
+        return products;
+    }
+
+    public static List<CS_ProductListWrapper> getTopRated() {
+        List<ProductReview__c> reviews = [
+                SELECT Rating__c, Product__r.Id, Product__r.Name
+                FROM ProductReview__c
+                ORDER BY Rating__c DESC
+                LIMIT 3
+        ];
+
+        List<String> ids = new List<String>();
+        for (ProductReview__c review : reviews) {
+            ids.add(review.Product__c);
+        }
+
+        List<PricebookEntry> pricebookEntries = [
+                SELECT Product2Id, Product2.Name, UnitPrice
+                FROM PricebookEntry
+                WHERE Product2Id IN :ids
+        ];
+
+        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
+        for (PricebookEntry pricebookEntry : pricebookEntries) {
+            wrapper.add(new CS_ProductListWrapper(
+                    pricebookEntry.Product2Id,
+                    pricebookEntry.Product2.Name,
+                    CS_ProductService.getProductPrice(pricebookEntry.Product2Id),
+                    pricebookEntry.UnitPrice
+            ));
+        }
+
+        return wrapper;
+    }
+
+    private static Integer getProductCount() {
+        Integer result = [SELECT Count() FROM Product2];
+        return result;
+    }
+
+    public static List<CS_ProductListWrapper> getRandomProduct() {
+        Integer productCount = getProductCount();
+        Integer randomNumber = Integer.valueof((Math.random() * productCount));
+        List<PricebookEntry> pricebookEntries = [
+                SELECT Product2Id, Product2.Name, UnitPrice
+                FROM PricebookEntry
+                LIMIT 3
+                OFFSET :randomNumber
+        ];
+
+        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
+        for (PricebookEntry pricebookEntry : pricebookEntries) {
+            wrapper.add(new CS_ProductListWrapper(
+                    pricebookEntry.Product2Id,
+                    pricebookEntry.Product2.Name,
+                    CS_ProductService.getProductPrice(pricebookEntry.Product2Id),
+                    pricebookEntry.UnitPrice
+            ));
+        }
+
+        return wrapper;
+    }
+
     public static void addProduct(
             String name,
             String description,
@@ -137,6 +209,12 @@ public with sharing class CS_ProductService {
 
         insert product;
 
+        insertPricebookEntry(product.Id, price);
+        insertAttachments(images, product.Id);
+        runApprovalProcess(product.Id);
+    }
+
+    private static void insertPricebookEntry(String productId, Decimal price) {
         Pricebook2 standardPriceBook = [
                 SELECT Id, IsStandard
                 FROM Pricebook2
@@ -146,27 +224,13 @@ public with sharing class CS_ProductService {
 
         PricebookEntry standardPriceBookEntry = new PricebookEntry(
                 Pricebook2Id = standardPriceBook.Id,
-                Product2Id = product.Id,
+                Product2Id = productId,
                 UnitPrice = price,
                 UseStandardPrice = false,
                 IsActive = true
         );
 
         insert standardPriceBookEntry;
-
-        insertAttachments(images, product.Id);
-        runApprovalProcess(product.Id);
-    }
-
-    public static List<Product2> getUserProducts() {
-        String userId = UserInfo.getUserId();
-        List<Product2> products = [
-                SELECT Name
-                FROM Product2
-                WHERE CreatedById = :userId
-                AND IsActive = true
-        ];
-        return products;
     }
 
     private static void insertAttachments(String[] images, String id) {
@@ -181,53 +245,12 @@ public with sharing class CS_ProductService {
         insert attachments;
     }
 
-    public static List<CS_ProductListWrapper> getTopRated() {
-        List<ProductReview__c> reviews = [
-                SELECT Rating__c, Product__r.Id, Product__r.Name
-                FROM ProductReview__c
-                ORDER BY Rating__c DESC
-                LIMIT 3
-        ];
-
-        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
-        for (ProductReview__c review : reviews) {
-            wrapper.add(new CS_ProductListWrapper(
-                    review.Product__r.Id,
-                    review.Product__r.Name,
-                    CS_ProductService.getProductPrice(review.Product__r.Id)
-            ));
-        }
-
-        return wrapper;
-    }
-
-    public static List<CS_ProductListWrapper> getRandomProduct() {
-        Integer randomNumber = Integer.valueof((Math.random() * 6));
-        List<PricebookEntry> pricebookEntries = [
-                SELECT Product2Id, Product2.Name
-                FROM PricebookEntry
-                LIMIT 3
-                OFFSET :randomNumber
-        ];
-
-        List<CS_ProductListWrapper> wrapper = new List<CS_ProductListWrapper>();
-        for (PricebookEntry pricebookEntry : pricebookEntries) {
-            wrapper.add(new CS_ProductListWrapper(
-                    pricebookEntry.Product2Id,
-                    pricebookEntry.Product2.Name,
-                    CS_ProductService.getProductPrice(pricebookEntry.Product2Id)
-            ));
-        }
-
-        return wrapper;
-    }
-
     private static void runApprovalProcess(String objectId) {
-        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
-        req1.setComments(System.Label.Email_Approval_Title);
-        req1.setObjectId(objectId);
-        req1.setProcessDefinitionNameOrId('New_Product_Approval');
-        req1.setSkipEntryCriteria(true);
-        Approval.ProcessResult result = Approval.process(req1);
+        Approval.ProcessSubmitRequest process = new Approval.ProcessSubmitRequest();
+        process.setComments(System.Label.Email_Approval_Title);
+        process.setObjectId(objectId);
+        process.setProcessDefinitionNameOrId('New_Product_Approval');
+        process.setSkipEntryCriteria(true);
+        Approval.ProcessResult result = Approval.process(process);
     }
 }

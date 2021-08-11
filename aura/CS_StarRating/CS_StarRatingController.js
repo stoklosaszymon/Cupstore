@@ -1,10 +1,10 @@
 ({
     afterScriptsLoaded : function(component, event, helper) {
-        var domEl = component.find("ratingArea").getElement();
-        var currentRating = component.get('v.value');
-        var readOnly = component.get('v.readonly');
-        var maxRating = 5;
-        var callback = function(rating) {
+        let domEl = component.find("ratingArea").getElement();
+        let currentRating = component.get('v.value');
+        let readOnly = component.get('v.readonly');
+        let maxRating = 5;
+        let callback = function(rating) {
             component.set('v.value',rating);
         }
         component.ratingObj = rating(domEl,currentRating,maxRating,callback,readOnly);
@@ -12,7 +12,7 @@
 
     onValueChange: function(component,event,helper) {
         if (component.ratingObj) {
-            var value = component.get('v.value');
+            let value = component.get('v.value');
             helper.setRating(component, value);
             component.ratingObj.setRating(value,false);
         }

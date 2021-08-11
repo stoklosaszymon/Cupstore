@@ -1,0 +1,48 @@
+<aura:component description="CS_CaseDetails" controller="CS_ComplaintController"
+                implements="force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="case" type="CS_CaseWrapper"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <h1 class="slds-m-top_medium header slds-m-bottom_small">{!$Label.c.Case}: {!v.case.caseNumber}</h1>
+    <div class="detailsContainer slds-p-around_medium">
+        <h1>{!$Label.c.Subject}</h1>
+        <p>{!v.case.subject}</p>
+        <h1>{!$Label.c.Description}</h1>
+        <p>{!v.case.description}</p>
+        <h1>{!$Label.c.Products}</h1>
+        <div class="slds-m-bottom_medium">
+            <aura:iteration items="{!v.case.products}" var="product">
+                <p class="paragraph">{!product.Product__r.Name}</p>
+            </aura:iteration>
+        </div>
+        <div class="details slds-p-around_medium">
+            <div class="info">
+                <h1>{!$Label.c.Reason}</h1>
+                <p>{!v.case.reason}</p>
+            </div>
+            <div class="info">
+                <h1>{!$Label.c.Status}</h1>
+                <p>{!v.case.status}</p>
+            </div>
+            <div class="info">
+                <h1>{!$Label.c.Case_Number}</h1>
+                <p>{!v.case.caseNumber}</p>
+            </div>
+            <div class="info">
+                <h1>{!$Label.c.Order_Number}</h1>
+                <p>{!v.case.orderNumber}</p>
+            </div>
+            <div class="info">
+                <h1>{!$Label.c.Created_Date}</h1>
+                <p>
+                    <lightning:formattedDateTime value="{!v.case.createdDate}" year="numeric" month="numeric"
+                                                 day="numeric"
+                                                 hour="2-digit"
+                                                 minute="2-digit"
+                                                 hour12="false"/>
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <h1 style="font-size: 1.4rem; font-weight: bold">{!$Label.c.Feeds}</h1>
+</aura:component>

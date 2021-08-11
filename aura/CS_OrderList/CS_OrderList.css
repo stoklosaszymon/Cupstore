@@ -1,0 +1,94 @@
+.THIS {
+}
+
+.THIS.mainContainer {
+    display:flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+
+.THIS .caseInfo {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: center;
+    cursor: pointer;
+}
+
+.THIS .listContainer:focus > .productList {
+    display: block;
+   transition: height 5s;
+}
+
+.THIS .actionButton > .productList {
+    display: none;
+}
+
+.THIS .actionButton {
+   padding-left: 5%;
+   padding-right: 2%;
+   cursor: pointer;
+}
+
+.THIS .productList {
+   border: 1px solid gray;
+   display: none;
+   height: 0%;
+   transition: height 5s;
+}
+
+.THIS .orderLabels {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -3%;
+}
+
+.THIS .labels {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+
+.THIS .productListItem {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.THIS .productListItem > * {
+    width: 20%;
+}
+
+.THIS .slds-carousel__indicators {
+   display: none;
+}
+
+.THIS .productLabels {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 45%;
+}
+
+.THIS .listElement {
+    border: 1px solid gray;
+    border-radius: 8px;
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+.THIS .orderLabels {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+}

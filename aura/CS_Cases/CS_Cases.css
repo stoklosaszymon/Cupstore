@@ -1,0 +1,34 @@
+.THIS {
+}
+
+.THIS.caseList {
+    width: 100%;
+    font-size: 1.1rem;
+
+}
+
+.THIS .caseListElement {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.THIS .actionButton {
+    cursor: pointer;
+    width: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.THIS .caseLabels {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: -2%;
+}

@@ -17,6 +17,8 @@ public with sharing class CS_ProductWrapper {
     public String material { get; set; }
     @AuraEnabled
     public Decimal volume { get; set; }
+    @AuraEnabled
+    public Decimal quantity { get; set; }
 
     public CS_ProductWrapper(
             String id,
@@ -27,5 +29,16 @@ public with sharing class CS_ProductWrapper {
         this.name = name;
         this.price = price;
         this.description = description;
+    }
+
+    public CS_ProductWrapper(
+            String id,
+            String name,
+            Decimal quantity,
+            Decimal price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 }

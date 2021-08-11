@@ -1,8 +1,6 @@
 <aura:component description="CS_DiscountManager" implements="flexipage:availableForAllPageTypes">
     <lightning:tabset variant="vertical">
-        <lightning:tab label="Discounts">
-        </lightning:tab>
-        <lightning:tab label="Create">
+        <lightning:tab label="{!$Label.c.Create_Discount}">
             <c:CS_CreateDiscount/>
         </lightning:tab>
     </lightning:tabset>
